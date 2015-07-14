@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for scene in story %}
+        <p>
+        {{ scene }}
+        </p>
+    {% endfor %}
+{% endblock %}

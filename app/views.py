@@ -3,8 +3,10 @@ __author__ = 'denialanderror'
 from flask import render_template
 from app import app
 from story import canned
+from story import texts
+import random
 
-c = canned.Canned("Gillian", "ferret", "female")
+c = canned.Canned("Gillian", "ferret", "she")
 
 
 @app.route('/')
@@ -12,7 +14,13 @@ c = canned.Canned("Gillian", "ferret", "female")
 def index():
     return render_template('index.html')
 
-@app.route('/next')
-def next():
+@app.route('/scene')
+def scene():
     story = c.scene()
-    return render_template('next.html', story=story)
+    image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
+                                            "turkey", "turtle", "wolf"]) + ".png"
+    return render_template('scene.html', story=story, image=image)
+
+@app.route('/test')
+def test():
+    return render_template('test.html', text=texts.phrase("openings"))

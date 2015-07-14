@@ -1,0 +1,54 @@
+@font-face {
+    font-family: rosecaps;
+    src: url(../fonts/rosecaps.TTF)
+}
+
+@font-face {
+    font-family: bouwsma;
+    src: url(../fonts/BouwsUnc.ttf)
+}
+
+body {
+    font-family: 'tangerine';
+    font-size: 40px;
+}
+
+.book {
+    margin-top: 1rem;
+    background: url(../img/big.png) center;
+    width: 1019px;
+    height: 722px;
+    background-size: 100%;
+    position: relative;
+}
+
+.content {
+    padding-top: 10%;
+    padding-left: 5%;
+    padding-right: 10%;
+}
+    .content p {
+        margin: 20px;
+    }
+
+    .content p:first-child:first-letter {
+        font-family: rosecaps;
+        font-size : 200%;
+        width : 1em;
+        color : black;
+    }
+
+.image {
+    padding: 50%;
+    margin: 0 auto;
+}
+    .image img {
+        width: 100%;
+        max-width: 200px;
+    }
+
+.next {
+    position: absolute;
+    bottom: 7%;
+    right: 7%;
+}

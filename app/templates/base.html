@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="app/static/css/style.css"/>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/SimpleGrid.css" rel="stylesheet" type="'text/css">
+    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href="/static/css/style.css" rel="stylesheet" type="'text/css">
+    {% if title %}
+        <title>Bedtime - {{ title }}</title>
+    {% else %}
+        <title>Bedtime - A bedtime story generator</title>
+    {% endif %}
+</head>
+<header>
+
+</header>
+<body>
+
+<div>
+    <div class="grid book">
+        <div class="col-1-2">
+            <div class="image">
+                <img src="{{url_for('static', filename='img/characters/')}}{{image}}">
+            </div>
+            </div>
+        <div class="col-1-2">
+            <div class="content">
+            {% block content %}{% endblock %}
+            </div>
+        </div>
+        <div class="next">
+            <a href="{{ url_for('scene')}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
+            </div>
+    </div>
+</div>
+</body>
+
+</html>
