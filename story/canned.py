@@ -79,7 +79,6 @@ class Canned(object):
                 self.aggregation("Once upon a time".split(), texts.phrase("openings")), texts.phrase("intro")))]
         elif 0 < self.story_index < len(self.locations) - 2:
             self.story_index += 1
-            print(self.story_index)
             return [self.realise(self.aggregation(texts.phrase("location_actions"), texts.phrase("meet_actions"))),
                     self.realise(texts.phrase("character_actions")),
                     self.realise(texts.phrase("questions")),
