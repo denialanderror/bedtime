@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form class="form" action="" method="post" name="create">
+      {{form.hidden_tag()}}
+        <p>My Story written by {{ form.author }}</p>
+        <p>Once upon a time, there was a {{ form.kind }} called {{ form.hero }}.</p>
+        <p>{{ form.gender }} has lost his {{ form.item }}! I wonder what is going to happen?</p>
+        <input class="next" type="image" src="{{ url_for('static', filename='img/next.png') }}" alt="Create!" />
+  </form>
+{% endblock %}
+
+{#      <table>#}
+{#          <tr>#}
+{#              <td>What is your name?</td>#}
+{#              <td>{{ form.author }}</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#              <td>What is your main character called?</td>#}
+{#              <td>{{ form.hero }}</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#              <td>What kind of animal are they?</td>#}
+{#              <td>{{ form.kind }}</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#              <td>Is your character a boy or a girl?</td>#}
+{#              <td>{{ form.gender }}</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#              <td>And finally, what have they lost?</td>#}
+{#              <td>{{ form.item }}</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#              <td></td>#}
+{#              <td><input type="submit" value="Create!"></td>#}
+{#          </tr>#}
+{#      </table>#}

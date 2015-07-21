@@ -47,8 +47,23 @@ body {
         max-width: 200px;
     }
 
+.fill {
+    border-top: 1px;
+    border-bottom: 1px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: 400px;
+}
+
 .next {
     position: absolute;
     bottom: 7%;
     right: 7%;
+}
+
+.form {
+    text: 25px;
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 5%;
 }

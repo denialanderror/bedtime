@@ -1,8 +1,10 @@
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from redis import Redis
+#from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('config')
-# db = SQLAlchemy(app)
+redis = Redis('localhost', charset="utf-8", decode_responses=True)
+#db = SQLAlchemy(app)
 
 from app import views

@@ -3,14 +3,14 @@
 {% block content %}
     <div class="col-1-2">
         <div class="content">
-            {% for scene in story %}
+            {% for line in scene %}
                 <p>
-                {{ scene }}
+                {{ line }}
                 </p>
             {% endfor %}
         </div>
         <div class="next">
-            <a href="{{ url_for('scene')}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
+            <a href="{{ url_for('story', story_id=story_id, page=page)}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
         </div>
     </div>
 {% endblock %}

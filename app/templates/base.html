@@ -18,23 +18,31 @@
 </header>
 <body>
 
-<div>
-    <div class="grid book">
-        <div class="col-1-2">
-            <div class="image">
-                <img src="{{url_for('static', filename='img/characters/')}}{{image}}">
-            </div>
-            </div>
-        <div class="col-1-2">
-            <div class="content">
-            {% block content %}{% endblock %}
-            </div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<div class="grid book">
+    <div class="col-1-2">
+        {% if image %}
+        <div class="image">
+            <img src="{{url_for('static', filename='img/characters/')}}{{image}}">
         </div>
-        <div class="next">
-            <a href="{{ url_for('scene')}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
-            </div>
+            {% else %}
+            <p class="fill">&nbsp</p>
+        {% endif %}
     </div>
+
+    {% block content %}{% endblock %}
+
 </div>
+
 </body>
 
 </html>

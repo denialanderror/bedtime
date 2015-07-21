@@ -1,8 +1,8 @@
 import string
 import random
-
-from story import texts
-
+from .texts import phrase
+from app import redis
+import json
 
 class Character(object):
     def __init__(self, name, kind, gender, emotion):
@@ -19,11 +19,12 @@ class Location(object):
 
 
 class Canned(object):
-    def __init__(self, name, kind, gender):
+    def __init__(self, name, kind, gender, quest):
         hero = Character(name, kind, gender, "happy")
         self.characters = [hero, hero]
-        self.story_index = 0
-        self.quest = "hat"
+        self._story_index = 0
+        self.quest = quest
+        self.end = False
         self.locations = [Location("hill", Character("Barry", "hedgehog", "he", "happy")),
                           Location("cave", Character("Ryan", "dragon", "he", "angry")),
                           Location("castle", Character("Polly", "princess", "she", "happy")),
@@ -32,6 +33,14 @@ class Canned(object):
                           Location("river", Character("Felicity", "fish", "she", "sad")),
                           Location("beach", Character("Patricia", "crab", "she", "happy"))]
         random.shuffle(self.locations)
+
+    @property
+    def story_index(self):
+        return self._story_index % len(self.locations)
+
+    @story_index.setter
+    def story_index(self, index):
+        self._story_index = index
 
     def realise(self, sentence):
         """
@@ -47,7 +56,7 @@ class Canned(object):
                     '_locationCharGender': self.characters[1].gender,
                     '_locationCharEmotion': self.characters[1].emotion,
                     '_questItem': self.quest,
-                    '_nextLocation': self.locations[self.story_index + 1].name,
+                    '_nextLocation': self.locations[(self.story_index + 1) % len(self.locations)].name,
                     }
         realised = [realiser[w] if w[0] == '_' else w for w in
                     sentence]  # sentence as a list with correct story attributes
@@ -64,32 +73,42 @@ class Canned(object):
 
     def aggregation(self, s1, s2):
         if s1[0] == s2[0]:
-            s1 += random.choice(["and", "and there _charGender".split()])
+            s1 += random.choice(["and".split(), "and there _charGender".split()])
             return s1 + s2[1:]
         else:
             s1.append(',')
             return s1 + s2
 
     def scene(self):
-
         self.characters[1] = self.locations[self.story_index].character
         if self.story_index == 0:
-            self.story_index += 1
+            print(str(self.story_index) + " start")
             return [self.realise(self.aggregation(
-                self.aggregation("Once upon a time".split(), texts.phrase("openings")), texts.phrase("intro")))]
-        elif 0 < self.story_index < len(self.locations) - 2:
-            self.story_index += 1
-            return [self.realise(self.aggregation(texts.phrase("location_actions"), texts.phrase("meet_actions"))),
-                    self.realise(texts.phrase("character_actions")),
-                    self.realise(texts.phrase("questions")),
-                    self.realise(texts.phrase("no")),
-                    self.realise(texts.phrase("next_scene"))]
-        elif self.story_index == len(self.locations) - 1:
-            return [self.realise(self.aggregation(texts.phrase("location_actions"), texts.phrase("meet_actions"))),
-                    self.realise(texts.phrase("character_actions")),
-                    self.realise(texts.phrase("questions")),
-                    self.realise(texts.phrase("yes"))]
+                self.aggregation("Once upon a time".split(), phrase("openings")), phrase("intro")))]
+        elif self.story_index < len(self.locations) - 2:
+            print(str(self.story_index) + "mid")
+            return [self.realise(self.aggregation(phrase("location_actions"), phrase("meet_actions"))),
+                    self.realise(phrase("character_actions")),
+                    self.realise(phrase("questions")),
+                    self.realise(phrase("no")),
+                    self.realise(phrase("next_scene"))]
+        elif self.story_index < len(self.locations) - 1:
+            print(str(self.story_index) + "yes")
+            return [self.realise(self.aggregation(phrase("location_actions"), phrase("meet_actions"))),
+                    self.realise(phrase("character_actions")),
+                    self.realise(phrase("questions")),
+                    self.realise(phrase("yes"))]
         else:
-            return [self.realise(texts.phrase("closes")),
+            self.end = True
+            print(str(self.story_index) + "end")
+            return [self.realise(phrase("closes")),
                     "And they all lived happily ever after.",
                     "The end."]
+
+    def generate(self):
+        story_id = redis.incr("next_id")
+        while not self.end:
+            redis.zadd("story_id:" + str(story_id), self.scene(), self.story_index)
+            print(redis.zrange("story_id:" + str(story_id), self.story_index, self.story_index))
+            self.story_index += 1
+        return story_id

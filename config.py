@@ -1,5 +1,5 @@
-__author__ = 'denialanderror'
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-# SQLALCHEMY_DATABASE_URI = "postgresql://denialanderror:password@localhost/bedtime"  #change password
-# WTF_CSRF_ENABLED = True
-# SECRET_KEY = 'you-will-never-guess'
+WTF_CSRF_ENABLED = True
+SECRET_KEY = 'changeme'
