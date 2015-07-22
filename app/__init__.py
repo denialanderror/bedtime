@@ -1,11 +1,12 @@
 import os
 from flask import Flask
 from redis import Redis
-#from flask.ext.sqlalchemy import SQLAlchemy
+# from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('config')
-redis = Redis(host=os.getenv('REDIS_URL', 'localhost'), port=os.getenv('REDIS_PORT_6379_TCP_PORT', 6379), charset="utf-8", decode_responses=True)
-#db = SQLAlchemy(app)
+redis = Redis(host=os.getenv('REDIS_URL', 'localhost'), port=os.getenv('REDIS_PORT_6379_TCP_PORT', 6379), db=0,
+              charset="utf-8", decode_responses=True)
+# db = SQLAlchemy(app)
 
 from app import views
