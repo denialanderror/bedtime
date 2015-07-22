@@ -6,7 +6,8 @@
       {{form.hidden_tag()}}
         <p>My Story written by {{ form.author }}</p>
         <p>Once upon a time, there was a {{ form.kind }} called {{ form.hero }}.</p>
-        <p>{{ form.gender }} has lost his {{ form.item }}! I wonder what is going to happen?</p>
+        <p>{{ form.gender }} has lost his {{ form.item }}! </p>
+        <p>I wonder what is going to happen?</p>
         <input class="next" type="image" src="{{ url_for('static', filename='img/next.png') }}" alt="Create!" />
   </form>
 {% endblock %}

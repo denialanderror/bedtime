@@ -1,11 +1,8 @@
-from flask import render_template, redirect, flash, sessions
+from flask import render_template, redirect
 from app import app, redis
 from story.canned import Canned
-from story import texts
 from .forms import CharacterCreator
 import random
-import json
-import re
 import ast
 
 @app.route('/')
@@ -23,18 +20,10 @@ def create():
     return render_template('create.html', form=form)
 
 
-# @app.route('/scene/')
-# def scene():
-#     story = character.scene()
-#     image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
-#                            "turkey", "turtle", "wolf"]) + ".png"
-#     return render_template('scene.html', story=story, image=image)
-
 @app.route('/story/<story_id>/<page>')
 def story(story_id, page):
     page = int(page)
     data = redis.zrange("story_id:" + story_id, page, page)
-    print(not data)
     if not data:
         return redirect('/create')
     scene = ast.literal_eval(data[0])
@@ -42,7 +31,13 @@ def story(story_id, page):
     image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
                             "turkey", "turtle", "wolf"]) + ".png"
     return render_template('story.html', scene=scene, image=image, story_id=story_id, page=page)
-#
-# @app.route('/test')
-# def test():
-#     return render_template('test.html', text=texts.phrase("openings"))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500

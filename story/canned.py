@@ -2,7 +2,6 @@ import string
 import random
 from .texts import phrase
 from app import redis
-import json
 
 class Character(object):
     def __init__(self, name, kind, gender, emotion):
@@ -82,25 +81,21 @@ class Canned(object):
     def scene(self):
         self.characters[1] = self.locations[self.story_index].character
         if self.story_index == 0:
-            print(str(self.story_index) + " start")
             return [self.realise(self.aggregation(
                 self.aggregation("Once upon a time".split(), phrase("openings")), phrase("intro")))]
         elif self.story_index < len(self.locations) - 2:
-            print(str(self.story_index) + "mid")
             return [self.realise(self.aggregation(phrase("location_actions"), phrase("meet_actions"))),
                     self.realise(phrase("character_actions")),
                     self.realise(phrase("questions")),
                     self.realise(phrase("no")),
                     self.realise(phrase("next_scene"))]
         elif self.story_index < len(self.locations) - 1:
-            print(str(self.story_index) + "yes")
             return [self.realise(self.aggregation(phrase("location_actions"), phrase("meet_actions"))),
                     self.realise(phrase("character_actions")),
                     self.realise(phrase("questions")),
                     self.realise(phrase("yes"))]
         else:
             self.end = True
-            print(str(self.story_index) + "end")
             return [self.realise(phrase("closes")),
                     "And they all lived happily ever after.",
                     "The end."]
@@ -109,6 +104,5 @@ class Canned(object):
         story_id = redis.incr("next_id")
         while not self.end:
             redis.zadd("story_id:" + str(story_id), self.scene(), self.story_index)
-            print(redis.zrange("story_id:" + str(story_id), self.story_index, self.story_index))
             self.story_index += 1
         return story_id

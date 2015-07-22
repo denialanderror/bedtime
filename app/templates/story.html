@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="col-1-2">
-        <div class="content">
-            {% for line in scene %}
-                <p>
-                {{ line }}
-                </p>
-            {% endfor %}
-        </div>
-        <div class="next">
-            <a href="{{ url_for('story', story_id=story_id, page=page)}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
-        </div>
+    <div class="content">
+        {% for line in scene %}
+            <p>
+            {{ line }}
+            </p>
+        {% endfor %}
+    </div>
+    <div class="next">
+        <a href="{{ url_for('story', story_id=story_id, page=page)}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
     </div>
 {% endblock %}
