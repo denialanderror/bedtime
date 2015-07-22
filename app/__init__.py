@@ -5,7 +5,7 @@ from redis import Redis
 
 app = Flask(__name__)
 app.config.from_object('config')
-redis = Redis(host=os.getenv('REDIS_HOST', 'localhost'), port=('REDIS_PORT', 6379), db=0,
+redis = Redis(host=os.getenv('REDIS_HOST', 'localhost'), port=os.getenv('REDIS_PORT', 6379), db=0,
               charset="utf-8", decode_responses=True)
 # db = SQLAlchemy(app)
 
