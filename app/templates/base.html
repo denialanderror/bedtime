@@ -2,46 +2,56 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="app/static/css/style.css"/>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/static/css/SimpleGrid.css" rel="stylesheet" type="'text/css">
-    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
-    <link href="/static/css/style.css" rel="stylesheet" type="'text/css">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{#    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css' />#}
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+    <script src="/static/js/vendor/modernizr.js"></script>
+
     {% if title %}
         <title>Bedtime - {{ title }}</title>
     {% else %}
         <title>Bedtime - A bedtime story generator</title>
     {% endif %}
+
 </head>
+
 <header>
 
 </header>
+
 <body>
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }} </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endwith %}
+    <div class="row book">
 
-<div class="grid book">
-    <div class="col-1-2">
-        {% if image %}
-        <div class="image">
-            <img src="{{url_for('static', filename='img/characters/')}}{{image}}">
+        <div class="hidden-for-medium-down large-6 columns page left">
+
+            {% if image %}
+            <div class="image">
+                <img src="{{url_for('static', filename='img/characters/')}}{{image}}">
+            </div>
+                {% else %}
+                <p class="fill">&nbsp</p>
+            {% endif %}
+
         </div>
-            {% else %}
-            <p class="fill">&nbsp</p>
-        {% endif %}
+
+        <div class="small-12 large-6 columns page right">
+
+            {% block content %}{% endblock %}
+
+        </div>
+
     </div>
-    <div class="col-1-2">
-        {% block content %}{% endblock %}
-    </div>
-</div>
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
 
 </body>
 

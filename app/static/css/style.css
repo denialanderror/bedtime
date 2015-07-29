@@ -3,24 +3,37 @@
     src: url(../fonts/rosecaps.TTF)
 }
 
-@font-face {
-    font-family: bouwsma;
-    src: url(../fonts/BouwsUnc.ttf)
-}
+/*@font-face {*/
+    /*font-family: bouwsma;*/
+    /*src: url(../fonts/BouwsUnc.ttf)*/
+/*}*/
 
 body {
-    font-family: 'tangerine';
-    font-size: 40px;
+    font-family: 'Coming Soon', cursive;
+}
+
+.row {
+    /*overrides the default Foundation row width so image fits correctly*/
+    max-width: 65rem;
 }
 
 .book {
-    margin-top: 1rem;
-    background: url(../img/big.png) center;
-    width: 1019px;
-    height: 722px;
-    background-size: 100%;
-    position: relative;
+    margin-top: 5rem;
 }
+    .book .page {
+        width: 520px;
+        height: 720px;
+        background-size: 100%;
+        position: relative;
+    }
+
+    .book .left {
+        background: url(../img/bookleft.png) right no-repeat;
+    }
+
+    .book .right {
+        background: url(../img/bookright.png) left no-repeat;
+    }
 
 .content {
     padding-top: 10%;
@@ -57,8 +70,8 @@ body {
 
 .next {
     position: absolute;
-    bottom: 7%;
-    right: 7%;
+    bottom: 5%;
+    right: 10%;
 }
 
 .form {
@@ -66,9 +79,4 @@ body {
     padding-top: 5%;
     padding-left: 10%;
     padding-right: 5%;
-}
-
-.error {
-    text-align: center;
-    padding-top: 30%;
 }

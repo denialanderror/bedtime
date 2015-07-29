@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1087594306">
-    <data-source source="LOCAL" name="SQLite -" uuid="e9803565-ef5c-490a-98b7-8ee8a56d0b58">
-      <driver-ref>sqlite.xerial</driver-ref>
+  <component name="DataSourceManagerImpl" format="xml" hash="1504977177">
+    <data-source source="LOCAL" name="PostgreSQL - bedtime@localhost" uuid="1c20bbcc-487e-4a1b-a4d2-c733b50f56c4">
+      <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:elements</jdbc-url>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/bedtime</jdbc-url>
       <libraries />
     </data-source>
   </component>

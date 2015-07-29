@@ -1,7 +1,4 @@
 Flask==0.10.1
-Flask-Restless==0.17.0
-Flask-SQLAlchemy==2.0
-SQLAlchemy==1.0.6
 Flask-WTF==0.12
 gunicorn==19.3.0
 itsdangerous==0.24

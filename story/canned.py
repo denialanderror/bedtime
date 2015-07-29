@@ -2,36 +2,18 @@ import string
 import random
 from .texts import phrase
 from app import redis
-
-class Character(object):
-    def __init__(self, name, kind, gender, emotion):
-        self.name = name
-        self.kind = kind
-        self.gender = gender
-        self.emotion = emotion
-
-
-class Location(object):
-    def __init__(self, name, character):
-        self.name = name
-        self.character = character
+from story.location import Location
+from story.creature import Creature
 
 
 class Canned(object):
     def __init__(self, name, kind, gender, quest):
-        hero = Character(name, kind, gender, "happy")
-        self.characters = [hero, hero]
+        hero = Creature(name, kind, gender)
+        self.characters = [hero, hero]  # added twice to correctly initialise list
         self._story_index = 0
         self.quest = quest
         self.end = False
-        self.locations = [Location("hill", Character("Barry", "hedgehog", "he", "happy")),
-                          Location("cave", Character("Ryan", "dragon", "he", "angry")),
-                          Location("castle", Character("Polly", "princess", "she", "happy")),
-                          Location("farm", Character("Jonah", "cow", "he", "sad")),
-                          Location("forest", Character("Harold", "snake", "he", "angry")),
-                          Location("river", Character("Felicity", "fish", "she", "sad")),
-                          Location("beach", Character("Patricia", "crab", "she", "happy"))]
-        random.shuffle(self.locations)
+        self.locations = [Location(), Location(), Location(), Location(), Location(), Location(), Location()]
 
     @property
     def story_index(self):
@@ -43,19 +25,21 @@ class Canned(object):
 
     def realise(self, sentence):
         """
-        Replaces text markup with the correct story attributes.
+        Replaces text markup with the correct story attributes
+        and corrects punctuation.
         """
         realiser = {'_charName': self.characters[0].name,
                     '_charKind': self.characters[0].kind,
                     '_charGender': self.characters[0].gender,
-                    '_charLocation': self.locations[self.story_index].name,
                     '_charEmotion': self.characters[0].emotion,
+                    '_charLocation': self.locations[self.story_index].location,
+                    # '_charDescription': self.descriptions(self.characters[0]),
                     '_locationCharName': self.characters[1].name,
                     '_locationCharKind': self.characters[1].kind,
                     '_locationCharGender': self.characters[1].gender,
                     '_locationCharEmotion': self.characters[1].emotion,
                     '_questItem': self.quest,
-                    '_nextLocation': self.locations[(self.story_index + 1) % len(self.locations)].name,
+                    '_nextLocation': self.locations[(self.story_index + 1) % len(self.locations)].location,
                     }
         realised = [realiser[w] if w[0] == '_' else w for w in
                     sentence]  # sentence as a list with correct story attributes
@@ -71,6 +55,8 @@ class Canned(object):
             print(realised)
 
     def aggregation(self, s1, s2):
+        """Concatenates strings into one sentence and corrects names to
+        pronouns"""
         if s1[0] == s2[0]:
             s1 += random.choice(["and".split(), "and there _charGender".split()])
             return s1 + s2[1:]
@@ -78,8 +64,14 @@ class Canned(object):
             s1.append(',')
             return s1 + s2
 
+    def descriptions(self, character):
+        """Places in appropriate adjectives"""
+        pass
+
     def scene(self):
-        self.characters[1] = self.locations[self.story_index].character
+        """Generates the next scene of the story.
+        """
+        self.characters[1] = self.locations[self.story_index].character  # load next non-user character
         if self.story_index == 0:
             return [self.realise(self.aggregation(
                 self.aggregation("Once upon a time".split(), phrase("openings")), phrase("intro")))]
@@ -101,6 +93,9 @@ class Canned(object):
                     "The end."]
 
     def generate(self):
+        """Creates story by adding scenes until the end is reached.
+        Story added to Redis instance under the given story ID, which
+        is returned to the caller"""
         story_id = redis.incr("next_id")
         while not self.end:
             redis.zadd("story_id:" + str(story_id), self.scene(), self.story_index)
