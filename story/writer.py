@@ -84,7 +84,7 @@ class Writer(object):
         Index refers to character in characters
         """
         pass
-    
+
     def scene(self):
         """Generates the next scene of the story.
         """
