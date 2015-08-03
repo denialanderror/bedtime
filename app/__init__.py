@@ -12,7 +12,7 @@ if not app.debug:
     import logging
     from logging import Formatter
     from logging.handlers import  SMTPHandler, RotatingFileHandler
-    from config import ADMIN, SERVER, PORT
+    from app.config import ADMIN, SERVER, PORT
 
     # sends emails to admin if critical issues occur
     # mail_handler = SMTPHandler((SERVER, PORT), 'server-error@' + SERVER, ADMIN, 'Bedtime Failure')
