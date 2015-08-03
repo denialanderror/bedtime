@@ -6,7 +6,7 @@ from story.location import Location
 from story.creature import Creature
 
 
-class Canned(object):
+class Writer(object):
     def __init__(self, name, kind, gender, quest):
         hero = Creature(name, kind, gender)
         self.characters = [hero, hero]  # added twice to correctly initialise list
@@ -23,7 +23,7 @@ class Canned(object):
     def story_index(self, index):
         self._story_index = index
 
-    def realise(self, sentence):
+    def realise(self, sentence: list):
         """
         Replaces text markup with the correct story attributes
         and corrects punctuation.
@@ -41,33 +41,50 @@ class Canned(object):
                     '_questItem': self.quest,
                     '_nextLocation': self.locations[(self.story_index + 1) % len(self.locations)].location,
                     }
-        realised = [realiser[w] if w[0] == '_' else w for w in
-                    sentence]  # sentence as a list with correct story attributes
-        # creates sentence from list while leaving punctuation
         try:
-            realised_string = ''.join([('' if char in string.punctuation else ' ') + char for char in realised]).strip()
-            # correcting punctuation and capitalising the start of the sentence
-            if realised_string[0] in string.punctuation:
-                return realised_string[0] + realised_string[2].capitalize() + realised_string[3:] + "."
-            else:
-                return realised_string.capitalize()[0] + realised_string[1:] + "."
-        except Exception as e:
-            print(realised)
+            realised = [realiser[w] if w[0] == '_' else w for w in
+                        sentence]  # sentence as a list with correct story attributes
 
-    def aggregation(self, s1, s2):
-        """Concatenates strings into one sentence and corrects names to
-        pronouns"""
-        if s1[0] == s2[0]:
-            s1 += random.choice(["and".split(), "and there _charGender".split()])
-            return s1 + s2[1:]
-        else:
-            s1.append(',')
+            # creates sentence from list while leaving punctuation
+            realised_string = ''.join([('' if char in [".", ",", "?", "!", "", '"', ":" ";"] else ' ')
+                                       + char for char in realised]).strip()
+
+            # capitalises first word in sentence, ignoring punctuation such as "
+            if realised_string[0] in string.punctuation:
+                realised_string = realised_string[0] + realised_string[2].capitalize() + realised_string[3:]
+            else:
+                realised_string = realised_string.capitalize()[0] + realised_string[1:]
+
+            # adds full stop to end, unless end is terminal punctuation
+            if realised_string[-1] in [".", ",", "?", "!"]:
+                return realised_string
+            else:
+                return realised_string + "."
+
+        except IndexError:
+            # converts empty list to empty sentence
+            return ""
+
+    def aggregation(self, s1: list, s2: list):
+        """Concatenates strings into one sentence and corrects names to pronouns
+        """
+        try:
+            if s1[0].lower() == s2[0].lower():
+                s1 += random.choice(["and".split(), "and there _charGender".split()])
+                return s1 + s2[1:]
+            else:
+                s1.append(',')
+                return s1 + s2
+        except IndexError:
+            # ignore string content if one or more list is empty
             return s1 + s2
 
-    def descriptions(self, character):
-        """Places in appropriate adjectives"""
+    def descriptions(self, index):
+        """Places in appropriate adjectives
+        Index refers to character in characters
+        """
         pass
-
+    
     def scene(self):
         """Generates the next scene of the story.
         """

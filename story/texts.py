@@ -34,18 +34,18 @@ _meet_actions = ["_charName met " + _ref_expr["npc_full"],
                  _ref_expr["npc_full"] + " was there waiting",
                  ]
 
-_character_actions = [" played a game ",
-                      " built a fort ",
-                      " went looking for berries ",
-                      " flew a kite ",
-                      " danced a jig ",
-                      " played hide and seek ",
-                      " told funny jokes ",
-                      " sung nursery rhymes ",
-                      " painted pretty pictures ",
-                      " went for a stroll ",
-                      " ate some tasty snacks ",
-                      " had a picnic "]
+_character_actions = ["played a game",
+                      "built a fort",
+                      "went looking for berries",
+                      "flew a kite",
+                      "danced a jig",
+                      "played hide and seek",
+                      "told funny jokes",
+                      "sung nursery rhymes",
+                      "painted pretty pictures",
+                      "went for a stroll",
+                      "ate some tasty snacks",
+                      "had a picnic"]
 
 _questions = ["\"have you seen my _questItem ?\" said _charName",
               "\"Do you know where my _questItem is ?\" asked _charName",
@@ -63,6 +63,8 @@ _next_scene = ["\"have you tried the _nextLocation ?\"",
 _closes = ["_charName was so happy to get the _questItem back",
            "_charName went home to the _charLocation with the _questItem"]
 
+_test = ['this is a normal sentence', 'this is another']  # for test purposes only, to avoid issues with random.choice
+
 
 def phrase(expression):
     """Returns a list representation of a randomised string from the requested
@@ -72,12 +74,15 @@ def phrase(expression):
               "intro": random.choice(_intro),
               "location_actions": random.choice(_location_actions),
               "meet_actions": random.choice(_meet_actions),
-              "character_actions": _ref_expr["hero"] + random.choice(_character_actions) + "with " + _ref_expr["npc"],
-              "creature_actions": _ref_expr["npc"] + random.choice(_character_actions) + "with " + _ref_expr["hero"],
+              "character_actions":
+                  _ref_expr["hero"] + " " + random.choice(_character_actions) + " with " + _ref_expr["npc"],
+              "creature_actions":
+                  _ref_expr["npc"] + " " + random.choice(_character_actions) + " with " + _ref_expr["hero"],
               "questions": random.choice(_questions),
               "yes": random.choice(_yes),
               "no": random.choice(_no),
               "next_scene": random.choice(_next_scene),
               "closes": random.choice(_closes),
+              "test": _test[0]
               }
-    return re.findall(r"[\w']+|[.,!?;\"]", str(switch[expression]).strip())
+    return re.findall(r"[\w']+|[-.,!?;:\"]", str(switch[expression]).strip())

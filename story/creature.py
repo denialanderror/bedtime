@@ -31,7 +31,7 @@ _size = {"big": ["big", "giant", "enormous", "gigantic", "huge", "massive", "gre
 
 _colour = ["black", "blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "white", "yellow"]
 
-_pattern = ["spots", "stripes", "plain"]
+_pattern = ["spotted", "striped", "plain"]
 
 _covering = {"fur": ["fur", "fluff", "down", "hair"],
              "spines": ["spines", "spikes", "prickles"],
@@ -62,7 +62,7 @@ class Creature(object):
             self.kind = random.choice(_kind)
         else:
             self.kind = kind
-        self.colour = [random.choice(_colour), random.choice(_colour)]
+        self._colour = [random.choice(_colour), random.choice(_colour)]
         self.pattern = random.choice(_pattern)
         self._size = random.choice(list(_size.keys()))
         self._covering = random.choice(list(_covering.keys()))
@@ -81,8 +81,14 @@ class Creature(object):
         return random.choice(_emotion.get(self._emotion))
 
     @emotion.setter
-    def emotion(self, value):
-        self._emotion = value
+    def colour(self):
+        if self.pattern == "plain":
+            return [self.colour[0]]
+        return [self.colour[0], "and", self.colour[0], self.pattern]
+
+    @property
+    def colour(self):
+        return random.choice(_colour.get(self._colour))
 
     def __repr__(self):
         return " ".join([self.gender, self.name, self.colour[0], self.colour[1], self.pattern, self.size,

@@ -1,6 +1,6 @@
-from flask import render_template, redirect, flash, request, sessions, session
+from flask import render_template, redirect, flash, request
 from app import app, redis
-from story.canned import Canned
+from story.writer import Writer
 from .forms import CharacterCreator
 import random
 import ast
@@ -25,7 +25,7 @@ def create():
         app.logger.info("Repeat visit!")
     form = CharacterCreator()
     if form.validate_on_submit():
-        story_id = Canned(form.hero.data, form.kind.data, form.gender.data, form.item.data).generate()
+        story_id = Writer(form.hero.data, form.kind.data, form.gender.data, form.item.data).generate()
         app.logger.info("%s Story ID: %s", user, story_id)
         return redirect('/story/' + str(story_id) + "/0")
     return render_template('create.html', form=form)
