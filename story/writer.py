@@ -23,7 +23,8 @@ class Writer(object):
     def story_index(self, index):
         self._story_index = index
 
-    def realise(self, sentence: list):
+    # def realise(self, sentence: list):
+    def realise(self, sentence):
         """
         Replaces text markup with the correct story attributes
         and corrects punctuation.
@@ -65,7 +66,8 @@ class Writer(object):
             # converts empty list to empty sentence
             return ""
 
-    def aggregation(self, s1: list, s2: list):
+    # def aggregation(self, s1: list, s2: list):
+    def aggregation(self, s1, s2):
         """Concatenates strings into one sentence and corrects names to pronouns
         """
         try:
