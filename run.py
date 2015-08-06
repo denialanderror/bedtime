@@ -1,4 +1,4 @@
 #!flask/bin/python
 from app import app
 
-app.run(debug=True)  # set to False when deploying
+app.run(debug=False)  # set to False when deploying
