@@ -9,7 +9,6 @@ import ast
 @app.route('/')
 @app.route('/index')
 def index():
-
     return render_template('index.html')
 
 
@@ -45,6 +44,21 @@ def story(story_id, page):
     image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
                            "turkey", "turtle", "wolf"]) + ".png"
     return render_template('story.html', title=title, scene=scene, image=image, story_id=story_id, page=page)
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
 
 
 @app.errorhandler(404)

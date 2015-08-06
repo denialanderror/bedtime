@@ -7,5 +7,5 @@ class CharacterCreator(Form):
     author = StringField('author', validators=[DataRequired()])
     hero = StringField('hero', validators=[DataRequired()])
     kind = StringField('kind', validators=[DataRequired()])
-    gender = SelectField('gender', choices=[('he', 'He'), ('she', 'She')])
+    gender = SelectField('gender', choices=[('male', 'He'), ('female', 'She')])
     item = StringField('item', validators=[DataRequired()])

@@ -1,7 +1,7 @@
 import unittest
 from app import app
-from story import writer
-from story import texts
+from story import creature, writer, texts
+import random
 
 
 class TestCase(unittest.TestCase):
@@ -11,6 +11,26 @@ class TestCase(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_an(self):
+        realised = ["a", "noun", "a", "antelope", "a", "a", "real", "a", "eritrean"]
+        for index, word in enumerate(realised):
+            if word == 'a' and realised[index + 1][0] in ['a', 'e', 'i', 'o', 'u']:
+                realised[index] = "an"
+        self.assertSequenceEqual(realised, ["a", "noun", "an", "antelope", "an", "a", "real", "an", "eritrean"])
+
+    """character create test cases"""
+    def test_Creature1(self):
+        c = creature.Creature()
+        gender_bender = {"he": "male", "she": "female"}
+        gender = gender_bender[c.gender]
+        self.assertIn(c.gender, ["he", "she"], "blank creature gender create failed")
+        self.assertIn(c.name, creature._names[gender], "blank creature name create failed")
+        self.assertIn(c.kind, creature._kind, "blank creature kind create failed")
+
+    def test_Creature2(self):
+        c = creature.Creature(gender="elamef")
+        self.assertIn(c.gender, ["he", "she"], "incorrect gender create failed")
 
     """texts test cases"""
 

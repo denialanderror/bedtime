@@ -1,11 +1,12 @@
 import random
 import re
 
-_ref_expr = {"hero_full": random.choice(["a _charKind named _charName", "_charName the _charKind"]),
+_ref_expr = {"hero_full": random.choice(["a _charDescription _charKind named _charName",
+                                         "_charName the _charDescription _charKind"]),
              "hero": random.choice(["_charName", "_charGender"]),
              "npc_full": random.choice(
-                 ["a _locationCharKind called _locationCharName", "_locationCharName the _locationCharKind"]),
-             "npc": random.choice(["the _locationCharKind", "_locationCharName"])
+                 ["a _npcDescription _npcKind called _npcName", "_npcName the _npcDescription _npcKind"]),
+             "npc": random.choice(["the _npcKind", "_npcName", "the _npcDescription _npcKind"])
              }
 
 _openings = ["a long long time ago",
@@ -20,19 +21,18 @@ _intro = ["there was " + _ref_expr["hero_full"],
           "you could hear stories about " + _ref_expr["hero_full"],
           _ref_expr["hero_full"] + " lived"]
 
-_location_actions = ["_charName walked to the _charLocation",
-                     "so _charName went to the _charLocation",
-                     "_charName travelled to the _charLocation",
-                     "when _charName got to the _charLocation",
-                     "over by the _charLocation",
-                     "After the long walk to the _charLocation",
-                     "at the _charLocation"]
+_location_actions = ["_charName walked to the _locationDescription _location",
+                     "so _charName went to the _locationDescription _location",
+                     "_charName travelled to the _locationDescription _location",
+                     "when _charName got to the _locationDescription _location",
+                     "over by the _locationDescription _location",
+                     "After the long walk to the _locationDescription _location",
+                     "at the _locationDescription _location"]
 
 _meet_actions = ["_charName met " + _ref_expr["npc_full"],
                  "_charName found " + _ref_expr["npc_full"],
                  _ref_expr["npc_full"] + " appeared",
-                 _ref_expr["npc_full"] + " was there waiting",
-                 ]
+                 _ref_expr["npc_full"] + " was there waiting"]
 
 _character_actions = ["played a game",
                       "built a fort",
@@ -51,17 +51,17 @@ _questions = ["\"have you seen my _questItem ?\" said _charName",
               "\"Do you know where my _questItem is ?\" asked _charName",
               "\"any idea where I could find my _questItem ?\" said _charName"]
 
-_yes = ["\"it's just over there\" said _locationCharName",
-        "\"yes I have it it in my pocket\" said _locationCharName"]
+_yes = ["\"it's just over there\" said _npcName",
+        "\"yes I have it it in my pocket\" said _npcName"]
 
-_no = ["\"I'm not sure what you are talking about\" said _locationCharName",
-       "\"sorry but no\" said _locationCharName"]
+_no = ["\"I'm not sure what you are talking about\" said _npcName",
+       "\"sorry but no\" said _npcName"]
 
 _next_scene = ["\"have you tried the _nextLocation ?\"",
                "\"try over there by the _nextLocation\""]
 
 _closes = ["_charName was so happy to get the _questItem back",
-           "_charName went home to the _charLocation with the _questItem"]
+           "_charName went home to the _location with the _questItem"]
 
 _test = ['this is a normal sentence', 'this is another']  # for test purposes only, to avoid issues with random.choice
 

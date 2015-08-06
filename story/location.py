@@ -34,5 +34,17 @@ class Location(object):
     def mood(self):
         return random.choice(_mood.get(self._mood))
 
+    def description(self):
+        choices = [self.colour, self.size, self.mood]
+        roll = random.random()
+        if roll < 0.1:
+            return ""
+        elif roll < 0.5:
+            choice = random.sample(choices, 2)
+            choice.insert(1, "and")
+            return " ".join(choice)
+        else:
+            return random.choice(choices)
+
     def __repr__(self):
         return " ".join([self.location, self.size, self.mood, self.character.__repr__()])

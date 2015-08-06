@@ -25,71 +25,96 @@ _names = {"male": ['Muhammad', 'Oliver', 'Jack', 'Noah', 'Jacob', 'Charlie', 'Ha
                      'Harper', 'Ariana', 'Lacey', 'Faith', 'Alexis', 'Robyn', 'Skye', 'Alyssa', 'Amy', 'Elena',
                      'Bethany', 'Rebecca', 'Lottie', 'Clara', 'Niamh', 'Naomi']}
 
+# Commented out variables are dict implementation which has been amended to lists for index
+
 _size = {"big": ["big", "giant", "enormous", "gigantic", "huge", "massive", "great", "large", "tremendous"],
-         "average": ["average", "normal"],
+         "average": ["average", "normal", "medium-sized"],
          "small": ["small", "tiny", "little", "petite", "pocket-sized", "baby"]}
+
+_covering = {"furry": ["furry", "fluffy", "downy", "hairy"],
+             "spiny": ["spiny", "spiky", "prickly"],
+             "scales": ["scales", "armoured", "plated"]}
+
+_emotion = {"happy": ["happy", "jolly", "cheerful", "bouncy", "smiley", "joyous"],
+            "sad": ["sad", "unhappy", "moody", "tearful"],
+            "angry": ["angry", "scary", "frightening", "cross", "furious", "vicious"],
+            "scared": ["scared", "fearful", "frightened"]}
+
+# _size = [["big", "giant", "enormous", "gigantic", "huge", "massive", "great", "large", "tremendous"],
+#          ["average", "normal" "medium-sized"],
+#          ["small", "tiny", "little", "petite", "pocket-sized", "baby"]]
+#
+# _covering = [["fur", "fluff", "down", "hair"],
+#              ["spines", "spikes", "prickles"],
+#              ["scales"], ["skin"]]
+
+# _happiness = [["happy", "jolly", "cheerful", "bouncy", "smiley", "joyous"], ["neutral"],
+#               ["sad", "unhappy", "moody", "tearful"]]
+#
+# _anger = [["angry", "scary", "frightening", "cross", "furious"], ["neutral"],
+#           ["scared", "fearful", "frightened"]]
+
+# _kind = ["thing", "creature", "animal", "critter", "beast"]
+_kind = ["dragon", "hamster", "hedgehog", "badger", "fox", "horse", "pony", "donkey", "panda", "mouse",
+         "rabbit", "bear", "snake", "hippo", "cat", "dog", "frog", "lizard", "unicorn", "crocodile"]
 
 _colour = ["black", "blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "white", "yellow"]
 
 _pattern = ["spotted", "striped", "plain"]
 
-_covering = {"fur": ["fur", "fluff", "down", "hair"],
-             "spines": ["spines", "spikes", "prickles"],
-             "scales": ["scales"],
-             "skin": ["skin"]}
-
-_emotion = {"happy": ["happy", "jolly", "cheerful", "bouncy", "smiley", "joyous"],
-            "neutral": ["neutral"],
-            "sad": ["sad", "unhappy", "moody", "tearful"],
-            "angry": ["angry", "scary", "frightening", "cross"],
-            "scared": ["scared", "fearful", "frightened"]}
-
-_kind = ["thing", "creature", "animal", "critter", "beast"]
-
 
 class Creature(object):
     def __init__(self, name=None, kind=None, gender=None):
-        if gender is None:
-            self.gender = random.choice(_gender)
+        """all variables with multiple choices are stored as indexes"""
+        if gender is None or gender not in _gender:
+            self._gender = random.choice(_gender)
         else:
-            self.gender = gender
+            self._gender = gender
 
         if name is None:
-            self.name = random.choice(_names.get(self.gender))
+            self.name = random.choice(_names.get(self._gender))
         else:
             self.name = name
         if kind is None:
             self.kind = random.choice(_kind)
         else:
             self.kind = kind
-        self._colour = [random.choice(_colour), random.choice(_colour)]
-        self.pattern = random.choice(_pattern)
-        self._size = random.choice(list(_size.keys()))
-        self._covering = random.choice(list(_covering.keys()))
-        self._emotion = random.choice(list(_emotion.keys()))
+        self._colour = random.sample(_colour, 2)
+        self._pattern = random.choice(_pattern)
+        self.size = random.choice(list(_size.keys()))
+        # self.size = random.randrange(len(_size))
+        self.covering = random.choice(list(_covering.keys()))
+        # self.covering = random.randrange(len(_covering))
+        self.emotion = random.choice(list(_emotion.keys()))
+        # self.happiness = random.randrange(len(_happiness))
+        # self.anger = random.randrange(len(_anger))
 
     @property
-    def size(self):
-        return random.choice(_size.get(self._size))
+    def gender(self):
+        if self._gender == "male":
+            return "he"
+        return "she"
 
     @property
-    def covering(self):
-        return random.choice(_covering.get(self._covering))
+    def colour_mixer(self):
+        if self._pattern == "plain":
+            return self._colour[0]
+        else:
+            return " ".join([self._colour[0], "and", self._colour[1], self._pattern])
 
-    @property
-    def emotion(self):
-        return random.choice(_emotion.get(self._emotion))
-
-    @emotion.setter
-    def colour(self):
-        if self.pattern == "plain":
-            return [self.colour[0]]
-        return [self.colour[0], "and", self.colour[0], self.pattern]
-
-    @property
-    def colour(self):
-        return random.choice(_colour.get(self._colour))
+    def description(self):
+        choices = [self.colour_mixer, random.choice(_size.get(self.size)), random.choice(_emotion.get(self.emotion)),
+                   random.choice(_covering.get(self.covering))]
+        roll = random.random()
+        if roll < 0.1:
+            return ""
+        elif roll < 0.5:
+            choice = random.sample(choices, 2)
+            choice.insert(1, "and")
+            return " ".join(choice)
+        else:
+            return random.choice(choices)
 
     def __repr__(self):
-        return " ".join([self.gender, self.name, self.colour[0], self.colour[1], self.pattern, self.size,
+        return " ".join([self._gender, self.name, self._colour[0], self._colour[1], self._pattern, self.size,
                          self.covering, self.emotion])
