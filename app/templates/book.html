@@ -8,6 +8,7 @@
 {#    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css' />#}
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/foundation.css" />
+{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.css"/>#}
     <link href="/static/css/style.css" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
     <script src="/static/js/vendor/modernizr.js"></script>
@@ -58,13 +59,26 @@
 
     </div>
 
-    {% block content %}{% endblock %}
+    <div class="row book">
+
+        <div class="small-12 large-6 large-centered columns book page front">
+            {% block content %}{% endblock %}
+        </div>
 
     </div>
 
     <script src="/static/js/vendor/jquery.js"></script>
     <script src="/static/js/foundation.min.js"></script>
+{#    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>#}
     <script>$(document).foundation();</script>
+     <script type="text/javascript">
+    $(document).ready(function(){
+      $('.characters').slick({
+          arrows: true,
+          infinite:true,
+      });
+    });
+  </script>
 
 </body>
 

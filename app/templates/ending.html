@@ -1,0 +1,25 @@
+{% extends "pages.html" %}
+
+{% block content %}
+    <div class="content">
+        <p>Thanks for reading!</p>
+        <p>Please rate this story and share with your friends!</p>
+        <ul class="share-buttons inline-list">
+            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}&t=Bedtime%20-%20A%20bedtime%20story%20generator" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
+            <li><a href="https://twitter.com/intent/tweet?source={{ url }}&text=Bedtime%20-%20A%20bedtime%20story%20generator:%20http%3A%2F%2F46.101.35.127" target="_blank" title="Tweet"><i class="fa fa-twitter-square fa-2x"></i></a></li>
+            <li><a href="http://www.tumblr.com/share?v=3&u={{ url }}&t=Bedtime%20-%20A%20bedtime%20story%20generator&s=" target="_blank" title="Post to Tumblr"><i class="fa fa-tumblr-square fa-2x"></i></a></li>
+            <li><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2F46.101.35.127&description=Want%20to%20read%20a%20bedtime%20story%3F%20See%20the%20one%20I've%20just%20made%20or%20create%20one%20yourself!" target="_blank" title="Pin it"><i class="fa fa-pinterest-square fa-2x"></i></a></li>
+            <li><a href="mailto:?subject=Bedtime%20-%20A%20bedtime%20story%20generator&body=Want%20to%20read%20a%20bedtime%20story%3F%20See%20the%20one%20I've%20just%20made%20or%20create%20one%20yourself!:%20{{ url }}" target="_blank" title="Email"><i class="fa fa-envelope-square fa-2x"></i></a></li>
+        </ul>
+        {# thanks to http://rog.ie/blog/css-star-rater for the code #}
+        <form class="form" action="" method="post" name="rating">
+            <span class="star-rating">
+              <input type="radio" name="rating" value="1"><i></i>
+              <input type="radio" name="rating" value="2"><i></i>
+              <input type="radio" name="rating" value="3"><i></i>
+              <input type="radio" name="rating" value="4"><i></i>
+              <input type="radio" name="rating" value="5"><i></i>
+            </span>
+        </form>
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "pages.html" %}
 
 {% block content %}
     <div class="content">
@@ -9,6 +9,7 @@
         {% endfor %}
     </div>
     <div class="next">
-        <a href="{{ url_for('story', story_id=story_id, page=page)}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
+        <a href="{{ url_for('story', story_id=story_id, page=page) }}">
+            <img src="{{ url_for('static', filename='img/next.png') }}"></a>
     </div>
 {% endblock %}

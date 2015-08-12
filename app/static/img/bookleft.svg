@@ -14,10 +14,10 @@
    id="svg4171"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="bookright.svg"
-   inkscape:export-filename="/Users/denialanderror/PycharmProjects/bedtime/app/static/img/bookright.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   sodipodi:docname="bookleft.svg"
+   inkscape:export-filename="/Users/denialanderror/PycharmProjects/bedtime/app/static/img/bookleft.png"
+   inkscape:export-xdpi="89.562912"
+   inkscape:export-ydpi="89.562912">
   <defs
      id="defs4173" />
   <sodipodi:namedview
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.87220106"
-     inkscape:cx="526.18109"
-     inkscape:cy="372.04724"
+     inkscape:zoom="9.8678285"
+     inkscape:cx="1026.5794"
+     inkscape:cy="48.934057"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -99,12 +99,12 @@
        inkscape:export-filename="/Users/denialanderror/PycharmProjects/bedtime/app/static/img/bookleft.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
-       transform="matrix(-1,0,0,1,1560,0)">
+       transform="matrix(-0.99615616,0,0,1.0004599,1557.0018,-0.31337656)">
       <path
-         sodipodi:nodetypes="csssscccc"
+         sodipodi:nodetypes="ccsssscccc"
          inkscape:connector-curvature="0"
          id="rect4728"
-         d="m 520,332.36218 480,0 c 22.16,0 40,13.46721 40,30.19554 l 0,639.60888 c 0,16.7284 -17.84,30.1956 -40,30.1956 l -480,0 0,0 0,-700.00002 z"
+         d="m 520,332.56477 27.84156,-0.20259 452.15844,0 c 22.16,0 40,13.46721 40,30.19554 l 0,639.60888 c 0,16.7284 -17.84,30.1956 -40,30.1956 l -480,0 -1.52596,0 m 1.01731,-6.5067 L 520,341.31855"
          style="fill:#552200;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.00650716;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
       <rect
          ry="40"

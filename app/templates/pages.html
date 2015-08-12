@@ -8,6 +8,7 @@
 {#    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css' />#}
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/foundation.css" />
+{#    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.css"/>#}
     <link href="/static/css/style.css" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
     <script src="/static/js/vendor/modernizr.js"></script>
@@ -48,9 +49,9 @@
           </div>
 
           <ul class="right">
-            <li><a href="{{ url_for('feedback')}}">Feedback</a></li>
-            <li><a href="{{ url_for('about')}}">About</a></li>
-            <li><a href="{{ url_for('settings')}}">Customise</a></li>
+            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('settings') }}">Customise</a></li>
           </ul>
 
         </section>
@@ -58,13 +59,37 @@
 
     </div>
 
-    {% block content %}{% endblock %}
+    <div class="row book">
+
+        <div class="hidden-for-medium-down large-6 columns page left">
+            {% if image %}
+            <div class="image">
+                <img src="{{url_for('static', filename='img/characters/')}}{{image}}">
+            </div>
+                {% else %}
+                <p class="fill">&nbsp</p>
+            {% endif %}
+        </div>
+
+        <div class="small-12 large-6 columns page right">
+            {% block content %}{% endblock %}
+        </div>
 
     </div>
 
     <script src="/static/js/vendor/jquery.js"></script>
     <script src="/static/js/foundation.min.js"></script>
+{#    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>#}
     <script>$(document).foundation();</script>
+{#    <script>$(document).ready(function(){$('#create').foundation('reveal', 'open')});</script>#}
+{#    <script type="text/javascript">#}
+{#    $(document).ready(function(){#}
+{#      $('.characters').slick({#}
+{#          arrows: true,#}
+{#          infinite:true,#}
+{#      });#}
+{#    });#}
+{#  </script>#}
 
 </body>
 

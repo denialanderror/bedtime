@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1504977177">
-    <data-source source="LOCAL" name="PostgreSQL - bedtime@localhost" uuid="1c20bbcc-487e-4a1b-a4d2-c733b50f56c4">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/bedtime</jdbc-url>
-      <libraries />
-    </data-source>
-  </component>
-</project>
+<project version="4" />

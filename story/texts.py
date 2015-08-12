@@ -11,7 +11,6 @@ _ref_expr = {"hero_full": random.choice(["a _charDescription _charKind named _ch
 
 _openings = ["a long long time ago",
              "in a galaxy far far away",
-             "beyond the deep, dark forest",
              "in a far off land",
              "over the hills and far away"]
 

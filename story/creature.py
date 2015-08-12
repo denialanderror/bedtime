@@ -28,8 +28,8 @@ _names = {"male": ['Muhammad', 'Oliver', 'Jack', 'Noah', 'Jacob', 'Charlie', 'Ha
 # Commented out variables are dict implementation which has been amended to lists for index
 
 _size = {"big": ["big", "giant", "enormous", "gigantic", "huge", "massive", "great", "large", "tremendous"],
-         "average": ["average", "normal", "medium-sized"],
-         "small": ["small", "tiny", "little", "petite", "pocket-sized", "baby"]}
+         "average": ["average", "normal", "medium-sized", "unassuming"],
+         "small": ["small", "tiny", "little", "petite", "pocket-sized", "miniature"]}
 
 _covering = {"furry": ["furry", "fluffy", "downy", "hairy"],
              "spiny": ["spiny", "spiky", "prickly"],
@@ -54,13 +54,14 @@ _emotion = {"happy": ["happy", "jolly", "cheerful", "bouncy", "smiley", "joyous"
 # _anger = [["angry", "scary", "frightening", "cross", "furious"], ["neutral"],
 #           ["scared", "fearful", "frightened"]]
 
-# _kind = ["thing", "creature", "animal", "critter", "beast"]
-_kind = ["dragon", "hamster", "hedgehog", "badger", "fox", "horse", "pony", "donkey", "panda", "mouse",
-         "rabbit", "bear", "snake", "hippo", "cat", "dog", "frog", "lizard", "unicorn", "crocodile"]
+_kind = "thing", "creature", "animal", "critter", "beast", "monster", "thingamajig"
+
+# _kind = ["dragon", "hamster", "hedgehog", "badger", "fox", "horse", "pony", "donkey", "panda", "mouse",
+#          "rabbit", "bear", "snake", "hippo", "cat", "dog", "frog", "lizard", "unicorn", "crocodile"]
 
 _colour = ["black", "blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "white", "yellow"]
 
-_pattern = ["spotted", "striped", "plain"]
+_pattern = ["spotted", "striped", "plain", "freckled", "checkered"]
 
 
 class Creature(object):

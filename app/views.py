@@ -1,7 +1,7 @@
 from flask import render_template, redirect, flash, request
 from app import app, redis
 from story.writer import Writer
-from .forms import CharacterCreator
+from .forms import CharacterCreator, Rating
 import random
 import ast
 
@@ -38,7 +38,7 @@ def story(story_id, page):
     title = "Bedtime - Story ID:  %s" % story_id
     data = redis.zrange("story_id:" + story_id, page, page)
     if not data:
-        return redirect('/again')
+        return redirect('/ending/' + story_id)
     scene = ast.literal_eval(data[0])
     page += 1
     image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
@@ -59,6 +59,15 @@ def feedback():
 @app.route('/settings')
 def settings():
     return render_template('settings.html')
+
+
+@app.route('/ending/<story_id>', methods=['GET', 'POST'])
+def ending(story_id):
+    url = request.url_root + "story/" + story_id + "/0"
+    rating = request.form['rating']
+    print(rating)
+    app.logger.info("ID: %s - Rating: %s", story_id, rating)
+    return render_template('ending.html', url=url)
 
 
 @app.errorhandler(404)

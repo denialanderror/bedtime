@@ -1,15 +1,56 @@
-{% extends "base.html" %}
+{% extends "pages.html" %}
 
 {% block content %}
 
-    <form class="form" action="" method="post" name="create">
-        {{form.hidden_tag()}}
-        <p>My Story written by {{ form.author }}</p>
-        <p>Once upon a time, there was a {{ form.kind }} called {{ form.hero }}.</p>
-        <p>{{ form.gender }} has lost his {{ form.item }}! </p>
-        <p>I wonder what is going to happen?</p>
-        <input class="next" type="image" src="{{ url_for('static', filename='img/next.png') }}" alt="Create!" />
-    </form>
+    <div id="create" class=" small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+{#    <div class="large-4 columns characters">#}
+{#        <div index="0"><img src="{{ url_for('static', filename='img/characters/bunny.png') }}"/></div>#}
+{#        <div index="1"><img src="{{ url_for('static', filename='img/characters/dog.png') }}"/></div>#}
+{#        <div index="2"><img src="{{ url_for('static', filename='img/characters/donkey.png') }}"/></div>#}
+{#        <div index="3"><img src="{{ url_for('static', filename='img/characters/elephant.png') }}"/></div>#}
+{#        <div index="4"><img src="{{ url_for('static', filename='img/characters/lion.png') }}"/></div>#}
+{#        <div index="5"><img src="{{ url_for('static', filename='img/characters/wolf.png') }}"/></div>#}
+{##}
+{#    </div>#}
+        <form class="form" action="" method="post" name="create">
+            {{form.hidden_tag()}}
+            <div class="large-8 columns">
+                <label for="author">What is your name?</label>
+                <input id="author" name="author" type="text" value="" />
+            </div>
+            <div class="large-8 columns">
+                <label for="hero">What is your character called?</label>
+                <input id="hero" name="hero" type="text" value="" />
+            </div>
+            <div class="large-8 columns">
+                <label for="kind">What sort of animal are they?</label>
+                <input id="kind" name="kind" type="text" value="" placeholder="e.g. cat, dog..." />
+            </div>
+            <div class="large-8 columns">
+                <label>Are they a boy or a girl</label>
+                <input id="gender-0" name="gender" type="radio" value="male" /><label for="gender-0">boy</label>
+                <input id="gender-1" name="gender" type="radio" value="female" /><label for="gender-1">girl</label>
+            </div>
+            <div class="large-8 columns">
+                <label for="author">And finally, this story is all about finding something that has gone missing. What
+                has your character lost?</label>
+                <input id="item" name="item" type="text" value="" placeholder="e.g. favourite hat, sock..." />
+            </div>
+
+            <button tabindex="0" type="submit"class="round button" value="Submit">Create!</button>
+        </form>
+
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+{#    <div class="large-3 columns">#}
+{#        <label for="author">author</label>:#}
+{#        <input id="author" name="author" type="text" value="" />#}
+{#    </div>#}
+{#    <div class="large-3 columns">#}
+{#        <label for="password">Password</label>:#}
+{#        <input id="password" name="password" type="password" value="" />#}
+{#    </div>#}
+    </div>
+
 {% endblock %}
 
 {#      <table>#}
