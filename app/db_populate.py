@@ -68,11 +68,8 @@ def populate_term(term_dict):
             entry.save()
 
 
-# Terms.objects.delete()
-# populate_term(term_dict)
-# print("populated: %d" % Terms.objects.count())
-# print(Terms.objects(name='male').distinct('terms'))
-# print(random.choice(Terms.objects(name='male').distinct('terms')))
+Terms.objects.delete()
+populate_term(term_dict)
 
 _openings = ["a long long time ago",
              "in a galaxy far far away",
