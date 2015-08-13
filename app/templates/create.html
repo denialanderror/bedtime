@@ -22,10 +22,10 @@
                 <label for="hero">What is your character called?</label>
                 <input id="hero" name="hero" type="text" value="" />
             </div>
-            <div class="large-8 columns">
-                <label for="kind">What sort of animal are they?</label>
-                <input id="kind" name="kind" type="text" value="" placeholder="e.g. cat, dog..." />
-            </div>
+{#            <div class="large-8 columns">#}
+{#                <label for="kind">What sort of animal are they?</label>#}
+{#                <input id="kind" name="kind" type="text" value="" placeholder="e.g. cat, dog..." />#}
+{#            </div>#}
             <div class="large-8 columns">
                 <label>Are they a boy or a girl</label>
                 <input id="gender-0" name="gender" type="radio" value="male" /><label for="gender-0">boy</label>
@@ -41,41 +41,7 @@
         </form>
 
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-{#    <div class="large-3 columns">#}
-{#        <label for="author">author</label>:#}
-{#        <input id="author" name="author" type="text" value="" />#}
-{#    </div>#}
-{#    <div class="large-3 columns">#}
-{#        <label for="password">Password</label>:#}
-{#        <input id="password" name="password" type="password" value="" />#}
-{#    </div>#}
+
     </div>
 
 {% endblock %}
-
-{#      <table>#}
-{#          <tr>#}
-{#              <td>What is your name?</td>#}
-{#              <td>{{ form.author }}</td>#}
-{#          </tr>#}
-{#          <tr>#}
-{#              <td>What is your main character called?</td>#}
-{#              <td>{{ form.hero }}</td>#}
-{#          </tr>#}
-{#          <tr>#}
-{#              <td>What kind of animal are they?</td>#}
-{#              <td>{{ form.kind }}</td>#}
-{#          </tr>#}
-{#          <tr>#}
-{#              <td>Is your character a boy or a girl?</td>#}
-{#              <td>{{ form.gender }}</td>#}
-{#          </tr>#}
-{#          <tr>#}
-{#              <td>And finally, what have they lost?</td>#}
-{#              <td>{{ form.item }}</td>#}
-{#          </tr>#}
-{#          <tr>#}
-{#              <td></td>#}
-{#              <td><input type="submit" value="Create!"></td>#}
-{#          </tr>#}
-{#      </table>#}

@@ -1,7 +1,7 @@
 from flask import render_template, redirect, flash, request
 from app import app, redis
 from story.writer import Writer
-from .forms import CharacterCreator, Rating
+from .forms import CharacterCreator
 import random
 import ast
 
@@ -61,12 +61,16 @@ def settings():
     return render_template('settings.html')
 
 
-@app.route('/ending/<story_id>', methods=['GET', 'POST'])
+
+# @app.route('/ending', methods=['POST', 'GET'])
+# def ending():
+@app.route('/ending/<story_id>', methods=['POST', 'GET'])
 def ending(story_id):
     url = request.url_root + "story/" + story_id + "/0"
-    rating = request.form['rating']
-    print(rating)
-    app.logger.info("ID: %s - Rating: %s", story_id, rating)
+    if request.method =='POST':
+        rating = request.form['rating']
+        print(rating)
+        # app.logger.info("ID: %s - Rating: %s", story_id, rating)
     return render_template('ending.html', url=url)
 
 

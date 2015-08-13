@@ -81,7 +81,8 @@
     <script src="/static/js/foundation.min.js"></script>
 {#    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>#}
     <script>$(document).foundation();</script>
-{#    <script>$(document).ready(function(){$('#create').foundation('reveal', 'open')});</script>#}
+    <script>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+    <script src="/static/js/scripts.js"></script>
 {#    <script type="text/javascript">#}
 {#    $(document).ready(function(){#}
 {#      $('.characters').slick({#}

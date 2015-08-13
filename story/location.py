@@ -1,26 +1,14 @@
 import random
+from app.models import Terms
 from story.creature import Creature
-
-_location = ["house", "hut", "castle", "tower", "lighthouse", "garden", "wood", "forest", "field", "town", "river",
-             "stream", "beach", "dunes", "seashore", "cave", "farm", "hill"]
-
-_size = {"big": ["big", "giant", "enormous", "gigantic", "huge", "massive", "great", "large", "tremendous"],
-         "average": ["average", "normal", "plain"],
-         "small": ["small", "tiny", "little", "petite", "miniature"]}
-
-_colour = ["black", "blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "white", "yellow"]
-
-_mood = {"positive": ["beautiful", "elegant", "lovely", "pretty", "majestic", "magical"],
-         "neutral": ["plan", "average-looking", "normal-looking", "common-or-garden"],
-         "negative": ["moody", "spooky", "haunted", "scary", "dark", "old"]}
 
 
 class Location(object):
     def __init__(self, character=None):
-        self.location = random.choice(_location)
-        self.colour = random.choice(_colour)
-        self._size = random.choice(list(_size.keys()))
-        self._mood = random.choice(list(_mood.keys()))
+        self.location = random.choice(Terms.objects(category='location').distinct('terms'))
+        self.colour = random.choice(Terms.objects(category='colour').distinct('terms'))
+        self._size = random.choice(Terms.objects(category='size').distinct('name'))
+        self._mood = random.choice(Terms.objects(category='mood').distinct('name'))
         if character is None:
             self.character = Creature()
         else:
@@ -28,11 +16,11 @@ class Location(object):
 
     @property
     def size(self):
-        return random.choice(_size.get(self._size))
+        return random.choice(Terms.objects(category='size', name=self._size).distinct('terms'))
 
     @property
     def mood(self):
-        return random.choice(_mood.get(self._mood))
+        return random.choice(Terms.objects(category='mood', name=self._mood).distinct('terms'))
 
     def description(self):
         choices = [self.colour, self.size, self.mood]

@@ -8,7 +8,8 @@ from story.creature import Creature
 
 class Writer(object):
     def __init__(self, name, kind, gender, quest):
-        hero = Creature(name, kind, gender)
+        # hero = Creature(name, kind, gender)
+        hero = Creature(name=name, gender=gender)
         self.characters = [hero, hero]  # added twice to correctly initialise list
         self._story_index = 0
         self.quest = quest
@@ -32,6 +33,8 @@ class Writer(object):
         realiser = {'_charName': self.characters[0].name,
                     '_charKind': self.characters[0].kind,
                     '_charGender': self.characters[0].gender,
+                    '_ref_expr_hero_full': self.characters[0].ref_expr(True),
+                    '_ref_expr_hero': self.characters[0].ref_expr(False),
                     # '_charEmotion': self.emotion_reaction(),
                     '_location': self.locations[self.story_index].location,
                     '_locationDescription': self.locations[self.story_index].description(),
@@ -40,6 +43,8 @@ class Writer(object):
                     '_npcKind': self.characters[1].kind,
                     '_npcGender': self.characters[1].gender,
                     '_npcDescription': self.characters[1].description(),
+                    '_ref_expr_npc_full': self.characters[1].ref_expr(True),
+                    '_ref_expr_npc': self.characters[1].ref_expr(False),
                     '_questItem': self.quest,
                     '_nextLocation': self.locations[(self.story_index + 1) % len(self.locations)].location,
                     }
