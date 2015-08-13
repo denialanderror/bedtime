@@ -1,7 +1,6 @@
 import os
 from flask import Flask
 from redis import Redis
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mongoengine import MongoEngine
 
 app = Flask(__name__)
@@ -12,11 +11,11 @@ db = MongoEngine(app)
 
 
 # enable error messages to be sent to admin accounts when app is deployed
-if not app.debug:
-    import logging
-    from logging import Formatter
-    from logging.handlers import SMTPHandler, RotatingFileHandler
-    from config import ADMIN, SERVER, PORT
+# if not app.debug:
+#     import logging
+#     from logging import Formatter
+#     from logging.handlers import SMTPHandler, RotatingFileHandler
+#     from config import ADMIN, SERVER, PORT
 
     # sends emails to admin if critical issues occur
     # mail_handler = SMTPHandler((SERVER, PORT), 'server-error@' + SERVER, ADMIN, 'Bedtime Failure')
