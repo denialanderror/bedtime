@@ -5,7 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # MONGODB_SETTINGS = {'db': 'bedtime'}
 
 MONGODB_SETTINGS = {'db': 'bedtime',
-                    'host': 'mongodb://denialanderror:e806912g@ds055792.mongolab.com:55792/bedtime'}
+                    'host': 'mongodb://<user>:<password>.mongolab.com:55792/bedtime'}
 
 # # needed for SQLAlchemy and database migration
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
