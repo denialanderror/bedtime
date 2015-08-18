@@ -23,12 +23,8 @@ class Creature(object):
         self._colour = random.sample(Terms.objects(category='colour').distinct('terms'), 2)
         self._pattern = random.choice(Terms.objects(category='pattern').distinct('terms'))
         self._size = random.choice(Terms.objects(category='size').distinct('name'))
-        # self.size = random.randrange(len(_size))
         self._covering = random.choice(Terms.objects(category='covering').distinct('name'))
-        # self.covering = random.randrange(len(_covering))
         self._emotion = random.choice(Terms.objects(category='emotion').distinct('name'))
-        # self.happiness = random.randrange(len(_happiness))
-        # self.anger = random.randrange(len(_anger))
 
     @property
     def gender(self):
@@ -55,7 +51,7 @@ class Creature(object):
                    random.choice(Terms.objects(category='emotion', name=self._emotion).distinct('terms')),
                    random.choice(Terms.objects(category='covering', name=self._covering).distinct('terms'))]
         roll = random.random()
-        if roll < 0.1:
+        if roll < 0.2:
             return ""
         elif roll < 0.5:
             choice = random.sample(choices, 2)

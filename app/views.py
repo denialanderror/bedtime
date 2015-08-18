@@ -1,7 +1,7 @@
 from flask import render_template, redirect, flash, request
-from app import app, redis
+from app import app, redis, models
 from story.writer import Writer
-from .forms import CharacterCreator
+from .forms import CharacterCreator, Feedback
 import random
 import ast
 
@@ -25,7 +25,6 @@ def create():
     form = CharacterCreator()
     if form.validate_on_submit():
         story_id = Writer(form.hero.data, form.kind.data, form.gender.data, form.item.data).generate()
-        app.logger.info("%s Story ID: %s", user, story_id)
         return redirect('/story/' + str(story_id) + "/0")
     return render_template('create.html', form=form)
 
@@ -51,27 +50,38 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/feedback')
-def feedback():
-    return render_template('feedback.html')
+@app.route('/feedback/<story_id>', methods=['GET', 'POST'])
+def feedback(story_id):
+    form = Feedback()
+    if request.method == 'POST':
+        f = models.Feedback.objects(story_id=int(story_id))
+        data = form.data
+        print(form.data)
+        # removing unanswered optional questions from survey
+        for key, value in form.data.items():
+            if value is None or value == 'None' or value == '':
+                del data[key]
+        print(data)
+        # update database if answers have been submitted
+        if data:
+            f.update_one(upsert=True, **data)
+    return render_template('feedback.html', form=form)
 
 
-@app.route('/settings')
-def settings():
-    return render_template('settings.html')
+@app.route('/contribute')
+def contribute():
+    return render_template('contribute.html')
 
 
-
-# @app.route('/ending', methods=['POST', 'GET'])
-# def ending():
-@app.route('/ending/<story_id>', methods=['POST', 'GET'])
+@app.route('/ending/<story_id>', methods=['GET', 'POST'])
 def ending(story_id):
     url = request.url_root + "story/" + story_id + "/0"
-    if request.method =='POST':
-        rating = request.form['rating']
-        print(rating)
-        # app.logger.info("ID: %s - Rating: %s", story_id, rating)
-    return render_template('ending.html', url=url)
+    if request.method == 'POST':
+        # checks if rating is already given before updating
+        models.Feedback.objects(story_id=int(story_id)).update_one(
+            story_id=story_id, ip=request.remote_addr, platform=request.user_agent.platform,
+            browser=request.user_agent.browser, rating=request.form['rating'], upsert=True)
+    return render_template('ending.html', url=url, story_id=story_id)
 
 
 @app.errorhandler(404)

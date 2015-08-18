@@ -1,11 +1,11 @@
 {% extends "book.html" %}
 
 {% block content %}
-    <div class="content">
-        <p>Welcome to Bedtime - the bedtime story generator!</p>
-        <p> Click the arrow below to start your story</p>
-    </div>
-    <div class="next">
-        <a href="{{ url_for('create')}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
-    </div>
+	<div class="content">
+		<p>Welcome to Bedtime - the bedtime story generator!</p>
+		<p> Click the arrow below to start your story</p>
+	</div>
+	<div class="next">
+		<a href="{{ url_for('create')}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
+	</div>
 {% endblock %}

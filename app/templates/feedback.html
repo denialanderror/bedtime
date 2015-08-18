@@ -1,4 +1,143 @@
-{% extends "book.html" %}
+{% extends "base.html" %}
 
 {% block content %}
+
+	<div class="row book">
+		<form method="post" name="feedback">
+			{{form.hidden_tag()}}
+
+			<div class="large-6 columns page left">
+
+				<div class="feedback">
+
+					<div class="large-9 columns">
+						<label for="parent_age">What is your age?</label>
+					</div>
+					<div class=" large-2 columns">
+						<input id="parent_age" name="parent_age" type="text" value="" />
+					</div>
+
+					<hr>
+
+					<div class="large-9 columns">
+						<label for="child_age">If you read this story to a child, what is their age?</label>
+					</div>
+					<div class=" large-2 columns">
+						<input id="child_age" name="child_age" type="text" value="" />
+					</div>
+
+					<hr>
+
+					<div class="large-9 columns">
+						<label for="read_by_child">If yes, did they read it with you?</label>
+					</div>
+					<div class=" large-3 columns">
+						<input id="read_by_child-0" name="read_by_child" type="radio" value="True">
+						<label for="read_by_child-0">Yes</label>
+						<input id="read_by_child-1" name="read_by_child" type="radio" value="False">
+						<label for="read_by_child-1">No</label>
+					</div>
+
+					<hr>
+
+					<div class="large-12 columns">
+						<label for="original">How original did you find the story?</label>
+              <span class="small-star star-rating">
+                <input type="radio" name="original" id="original-0" value="1"><i></i>
+                <input type="radio" name="original" id="original-1" value="2"><i></i>
+                <input type="radio" name="original" id="original-2" value="3"><i></i>
+                <input type="radio" name="original" id="original-3" value="4"><i></i>
+                <input type="radio" name="original" id="original-4" value="5"><i></i>
+              </span><br>
+						<label for="enjoyable">How enjoyable was it to read?</label>
+              <span class="small-star star-rating">
+	              <input type="radio" name="enjoyable" id="enjoyable-0" value="1"><i></i>
+	              <input type="radio" name="enjoyable" id="enjoyable-1" value="2"><i></i>
+	              <input type="radio" name="enjoyable" id="enjoyable-2" value="3"><i></i>
+	              <input type="radio" name="enjoyable" id="enjoyable-3" value="4"><i></i>
+	              <input type="radio" name="enjoyable" id="enjoyable-4" value="5"><i></i>
+              </span><br>
+						<label for="appropriate">Was the story and language age-appropriate?</label>
+              <span class="small-star star-rating">
+	              <input type="radio" name="appropriate" id="appropriate-0" value="1"><i></i>
+	              <input type="radio" name="appropriate" id="appropriate-1" value="2"><i></i>
+	              <input type="radio" name="appropriate" id="appropriate-2" value="3"><i></i>
+	              <input type="radio" name="appropriate" id="appropriate-3" value="4"><i></i>
+	              <input type="radio" name="appropriate" id="appropriate-4" value="5"><i></i>
+              </span><br>
+						<label for="coherent">How coherent was the story's narrative?</label>
+              <span class="small-star star-rating">
+                <input type="radio" name="coherent" id="coherent-0" value="1"><i></i>
+                <input type="radio" name="coherent" id="coherent-1" value="2"><i></i>
+                <input type="radio" name="coherent" id="coherent-2" value="3"><i></i>
+                <input type="radio" name="coherent" id="coherent-3" value="4"><i></i>
+                <input type="radio" name="coherent" id="coherent-4" value="5"><i></i>
+              </span><br>
+						<label for="engaging">How engaging did you find the story and its characters?</label>
+              <span class="small-star star-rating">
+                <input type="radio" name="engaging" id="engaging-0" value="1"><i></i>
+                <input type="radio" name="engaging" id="engaging-1" value="2"><i></i>
+                <input type="radio" name="engaging" id="engaging-2" value="3"><i></i>
+                <input type="radio" name="engaging" id="engaging-3" value="4"><i></i>
+                <input type="radio" name="engaging" id="engaging-4" value="5"><i></i>
+              </span><br>
+						<label for="repeat">How likely are you to use Bedtime again in the future?</label>
+              <span class="small-star star-rating">
+                <input type="radio" name="repeat" id="repeat-0" value="1"><i></i>
+                <input type="radio" name="repeat" id="repeat-1" value="2"><i></i>
+                <input type="radio" name="repeat" id="repeat-2" value="3"><i></i>
+                <input type="radio" name="repeat" id="repeat-3" value="4"><i></i>
+                <input type="radio" name="repeat" id="repeat-4" value="5"><i></i>
+              </span><br>
+						<label for="recommend">How likely are you to recommend Bedtime to a friend?</label>
+              <span class="small-star star-rating">
+                <input type="radio" name="recommend" id="recommend-0" value="1"><i></i>
+                <input type="radio" name="recommend" id="recommend-1" value="2"><i></i>
+                <input type="radio" name="recommend" id="recommend-2" value="3"><i></i>
+                <input type="radio" name="recommend" id="recommend-3" value="4"><i></i>
+                <input type="radio" name="recommend" id="recommend-4" value="5"><i></i>
+              </span>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="small-12 large-6 columns page right">
+
+				<div class="feedback">
+
+					<div class="large-11 columns">
+						<label for="like">What did you like about your experience with the Bedtime Story Generator?</label>
+						<textarea id="like" name="like" type="text" value="" placeholder="Please mention anything you liked about the story, characters or overall experience" ></textarea>
+					</div>
+
+					<div class="large-11 columns">
+						<label for="dislike">Is there anything you disliked about the experience?</label>
+						<textarea id="dislike" name="dislike" type="text" value="" placeholder="Be honest! All feedback is helpful" ></textarea>
+					</div>
+
+					<div class="large-11 columns">
+						<label for="comments">If you have any comments, suggestions or lucrative offers of commissions,
+							feel free to make any further notes here</label>
+						<textarea id="comments" name="comments" type="text" value="" placeholder="" ></textarea>
+					</div>
+
+					<button tabindex="0" type="submit"class="round button" value="Submit" data-reveal-id="thanks">Submit</button>
+
+				</div>
+			</div>
+
+		</form>
+
+		<div id="thanks" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+			<div class="lead">
+				<p class="lead" id="modalTitle">Thanks!</p>
+				<p>Feel free to create more stories and check out the Contribute section, where you can help bring
+					these stories to life with your own words and phrases.</p>
+			</div>
+			<a href="{{ url_for('index') }}" class="round button">Again!</a>
+			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+		</div>
+	</div>
 {% endblock %}

@@ -1,5 +1,4 @@
 from app.models import *
-import random
 
 _names = {"male": ['Muhammad', 'Oliver', 'Jack', 'Noah', 'Jacob', 'Charlie', 'Harry', 'Joshua', 'James',
                    'Ethan', 'Thomas', 'William', 'Henry', 'Oscar', 'Daniel', 'Max', 'Leo', 'George', 'Alfie',
@@ -33,9 +32,8 @@ _covering = {"furry": ["furry", "fluffy", "downy", "hairy"],
              "scales": ["scales", "armoured", "plated"]}
 
 _emotion = {"happy": ["happy", "jolly", "cheerful", "bouncy", "smiley", "joyous"],
-            "sad": ["sad", "unhappy", "moody", "tearful"],
             "angry": ["angry", "scary", "frightening", "cross", "furious", "vicious"],
-            "scared": ["scared", "fearful", "frightened"]}
+            "scared": ["scared", "fearful", "frightened", "sad", "unhappy", "moody", "tearful"]}
 
 _mood = {"positive": ["beautiful", "elegant", "lovely", "pretty", "majestic", "magical"],
          "neutral": ["plan", "average-looking", "normal-looking", "common-or-garden"],
@@ -67,10 +65,6 @@ def populate_term(term_dict):
             entry = Terms(category=category, name=name, terms=terms)
             entry.save()
 
-
-Terms.objects.delete()
-populate_term(term_dict)
-
 _openings = ["a long long time ago",
              "in a galaxy far far away",
              "in a far off land",
@@ -95,19 +89,6 @@ _meet_actions = ["_charName met _ref_expr_npc_full",
                  "_ref_expr_npc_full appeared",
                  "_ref_expr_npc_full was there waiting"]
 
-_character_actions = ["played a game",
-                      "built a fort",
-                      "went looking for berries",
-                      "flew a kite",
-                      "danced a jig",
-                      "played hide and seek",
-                      "told funny jokes",
-                      "sung nursery rhymes",
-                      "painted pretty pictures",
-                      "went for a stroll",
-                      "ate some tasty snacks",
-                      "had a picnic"]
-
 _questions = ["\"have you seen my _questItem ?\" said _charName",
               "\"Do you know where my _questItem is ?\" asked _charName",
               "\"any idea where I could find my _questItem ?\" said _charName"]
@@ -128,7 +109,6 @@ text_dict = {'openings': _openings,
              'intro': _intro,
              'location_actions': _location_actions,
              'meet_actions': _meet_actions,
-             'character_actions': _character_actions,
              'questions': _questions,
              'yes': _yes,
              'no': _no,
@@ -141,6 +121,64 @@ def populate_text(text_dict):
         entry = Texts(category=category, texts=texts)
         entry.save()
 
+_character_actions = {'action': ["played a game with",
+                                 "built a fort with",
+                                 "went looking for berries with",
+                                 "flew a kite with",
+                                 "danced a jig with",
+                                 "played hide and seek with",
+                                 "told a funny joke to",
+                                 "sung nursery rhymes with",
+                                 "painted a picture of",
+                                 "went for a stroll with",
+                                 "had a picnic with"],
+                      'reaction': ["they had a lovely time",
+                                   "they had a lot of fun",
+                                   "they became the best of friends",
+                                   "they lost track of time",
+                                   "they didn't want to stop",
+                                   "they enjoyed themselves"]}
 
-Texts.objects.delete()
+_happy_actions = {'action': ["smiled warmly at",
+                             "waved happily at",
+                             "grinned cheekily at",
+                             "went to hug"],
+                  'reaction': ["it made _charName feel very happy",
+                               "_charName waved back",
+                               "_charName felt safe and loved",
+                               "_charName had made a new friend"]}
+
+_angry_actions = {'action': ["roared angrily at",
+                             "stared menacingly at",
+                             "looked threateningly at",
+                             "shouted loudly at",
+                             "glared scarily at"
+                             "growled at"],
+                  'reaction': ["_charName did not feel very welcome",
+                               "_charName ran away to hide",
+                               "_charName felt quite scared",
+                               "_charName looked around nervously"]}
+
+_scared_actions = {'action': ["hid from",
+                              "ran away from",
+                              "looked nervously at"],
+                   'reaction': [""]}
+
+action_dict = {'character_actions': _character_actions,
+               'happy_actions': _happy_actions,
+               'angry_actions': _angry_actions,
+               'scared_actions': _scared_actions}
+
+
+def populate_action(action_dict):
+    for category, dictionary in action_dict.items():
+            entry = Actions(category=category, actions=dictionary['action'], reactions=dictionary['reaction'])
+            entry.save()
+
+
+# Actions.objects.delete()
+# Texts.objects.delete()
+# Terms.objects.delete()
+populate_action(action_dict)
 populate_text(text_dict)
+populate_term(term_dict)

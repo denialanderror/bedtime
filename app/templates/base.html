@@ -3,73 +3,71 @@
 
 <head>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{#    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css' />#}
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/foundation.css" />
-    <link href="/static/css/style.css" rel="stylesheet" />
-    <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
-    <script src="/static/js/vendor/modernizr.js"></script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	{#    <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css' />#}
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/foundation.css" />
+	<link href="/static/css/style.css" rel="stylesheet" />
+	<link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+	<script src="/static/js/vendor/modernizr.js"></script>
 
-    {% if title %}
-        <title>Bedtime - {{ title }}</title>
-    {% else %}
-        <title>Bedtime - A bedtime story generator</title>
-    {% endif %}
+	{% if title %}
+		<title>Bedtime - {{ title }}</title>
+	{% else %}
+		<title>Bedtime - A bedtime story generator</title>
+	{% endif %}
 
-    <link rel="shortcut icon" type="image/ico" href="{{url_for('static', filename='img/favicon.ico')}}" />
+	<link rel="shortcut icon" type="image/ico" href="{{url_for('static', filename='img/favicon.ico')}}" />
 
 </head>
 <body>
 
-    <div class="contain-to-grid sticky">
+<div class="contain-to-grid sticky">
 
-      <nav class="top-bar" data-topbar role="navigation">
-        <ul class="title-area">
-          <li class="name">
-            <div class="show-for-small-only">
-                <a href="{{ url_for('index')}}">
-                    <img class="logo" src="{{url_for('static', filename='img/icon.png')}}">
-                </a>
-            </div>
-          </li>
-          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-        </ul>
+	<nav class="top-bar" data-topbar role="navigation">
+		<ul class="title-area">
+			<li class="name">
+				<div class="show-for-small-only">
+					<a href="{{ url_for('index')}}">
+						<img class="logo" src="{{url_for('static', filename='img/icon.png')}}">
+					</a>
+				</div>
+			</li>
+			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+		</ul>
 
-        <section class="top-bar-section">
+		<section class="top-bar-section">
 
-          <div class="logo-wrapper hide-for-small-only">
-            <div class="logo">
-                <a href="{{ url_for('index')}}">
-                    <img src="{{url_for('static', filename='img/icon.png')}}">
-                </a>
-            </div>
-          </div>
+			<div class="logo-wrapper hide-for-small-only">
+				<div class="logo">
+					<a href="{{ url_for('index')}}">
+						<img src="{{url_for('static', filename='img/icon.png')}}">
+					</a>
+				</div>
+			</div>
 
-          <ul class="right">
-            <li><a href="{{ url_for('feedback')}}">Feedback</a></li>
-            <li><a href="{{ url_for('about')}}">About</a></li>
-            <li><a href="{{ url_for('settings')}}">Customise</a></li>
-          </ul>
+			<ul class="right">
+				<li><a href="{{ url_for('about')}}">About</a></li>
+				<li><a href="{{ url_for('contribute')}}">contribute</a></li>
+				<li><a href="{{ url_for('create')}}">Create</a></li>
+			</ul>
 
-        </section>
-      </nav>
+		</section>
+	</nav>
 
-    </div>
+</div>
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-    </div>
-
-    <script src="/static/js/vendor/jquery.js"></script>
-    <script src="/static/js/foundation.min.js"></script>
-    <script>$(document).foundation();</script>
+<script src="/static/js/vendor/jquery.js"></script>
+<script src="/static/js/foundation.min.js"></script>
+<script>$(document).foundation();</script>
 
 </body>
 
 <footer>
-    <p>Bedtime was created by Sam Joseph for his 2015 University of Birmingham MSc Computer Science summer project</p>
+	<p>Bedtime was created by Sam Joseph for his 2015 University of Birmingham MSc Computer Science summer project</p>
 </footer>
 
 </html>

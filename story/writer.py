@@ -4,6 +4,7 @@ from .texts import phrase
 from app import redis
 from story.location import Location
 from story.creature import Creature
+from app.models import Story
 
 
 class Writer(object):
@@ -83,7 +84,7 @@ class Writer(object):
         """
         try:
             if s1[0].lower() == s2[0].lower():
-                s1 += random.choice(["and".split(), "and there _charGender".split()])
+                s1 += random.choice(["and".split(), "and _charGender".split()])
                 return s1 + s2[1:]
             else:
                 s1.append(',')
@@ -157,3 +158,11 @@ class Writer(object):
             redis.zadd("story_id:" + str(story_id), self.scene(), self.story_index)
             self.story_index += 1
         return story_id
+        # redis data then added to MongoDB for permanence
+        # pages = []
+        # while not self.end:
+        #     pages.append(self.scene())
+        #     self.story_index += 1
+        # story = Story(pages=pages)
+        # story.save()
+        # return story.id

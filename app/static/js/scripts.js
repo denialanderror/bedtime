@@ -8,19 +8,10 @@ $('#ratings').find('input').on('change', function() {
     var rating = $('input[name=rating]:checked', '#ratings').val();
     var url = $(location).attr('pathname');
     $.post(("/ending/" + url.substr(url.lastIndexOf('/') + 1)), { rating: rating } );
+    $('#thanks').foundation('reveal', 'open');
+});
 
-
-    //$.ajax({
-    //    type: 'POST',
-    //    url: '/ending',
-    //    data: rating,
-    //    processData: false,
-    //    contentType: false,
-    //    success: function(response) {
-    //            console.log(rating);
-    //    },
-    //    error: function(error) {
-    //        console.log(error);
-    //    }
-    //})
+// closes thanks modal on click of No button
+$('a.custom-close-reveal-modal').click(function(){
+    $('#thanks').foundation('reveal', 'close');
 });
