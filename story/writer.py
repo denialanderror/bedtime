@@ -4,7 +4,7 @@ from .texts import phrase
 from app import redis
 from story.location import Location
 from story.creature import Creature
-from app.models import Story
+from app.models import Story, Pages
 
 
 class Writer(object):
@@ -153,16 +153,17 @@ class Writer(object):
         """Creates story by adding scenes until the end is reached.
         Story added to Redis instance under the given story ID, which
         is returned to the caller"""
-        story_id = redis.incr("next_id")
-        while not self.end:
-            redis.zadd("story_id:" + str(story_id), self.scene(), self.story_index)
-            self.story_index += 1
-        return story_id
-        # redis data then added to MongoDB for permanence
-        # pages = []
+        # story_id = redis.incr("next_id")
         # while not self.end:
-        #     pages.append(self.scene())
+        #     redis.zadd("story_id:" + str(story_id), self.scene(), self.story_index)
         #     self.story_index += 1
-        # story = Story(pages=pages)
-        # story.save()
-        # return story.id
+        # return story_id
+        # redis data then added to MongoDB for permanence
+        pages = []
+        while not self.end:
+            # pages.append(Pages(page=self.story_index, sentences=self.scene()))
+            pages.append(Pages(page=self.story_index, sentences=self.scene()))
+            self.story_index += 1
+        story = Story(pages=pages)
+        story.save()
+        return story.id

@@ -18,8 +18,13 @@ class Actions(db.Document):
     reactions = db.ListField(db.StringField(max_length=70))
 
 
+class Pages(db.EmbeddedDocument):
+    page = db.IntField()
+    sentences = db.ListField(db.StringField())
+
+
 class Story(db.Document):
-    pages = db.ListField(db.StringField())
+    pages = db.ListField(db.EmbeddedDocumentField(Pages))
 
 
 class Feedback(db.Document):

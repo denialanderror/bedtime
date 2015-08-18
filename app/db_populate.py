@@ -175,10 +175,34 @@ def populate_action(action_dict):
             entry = Actions(category=category, actions=dictionary['action'], reactions=dictionary['reaction'])
             entry.save()
 
-
+Story.objects.delete()
 # Actions.objects.delete()
 # Texts.objects.delete()
 # Terms.objects.delete()
-populate_action(action_dict)
-populate_text(text_dict)
-populate_term(term_dict)
+# populate_action(action_dict)
+# populate_text(text_dict)
+# populate_term(term_dict)
+
+p = Pages(page=1, sentences=["1", "2", "3", "4", "5", "6"])
+p1 = Pages(page=2, sentences=["11", "22", "33", "44", "55", "66"])
+p2 = Pages(page=3, sentences=["5", "6"])
+s = Story(pages=[p, p1, p2])
+s.save()
+
+
+scene = Story.objects(id=s.id).distinct('pages')[1].sentences
+print(scene)
+# print(scene.to_json())
+# for p in scene:
+#     print(p.sentences)
+#
+# print(scene[0].sentences)
+# print(scene = Story.objects.get(id=s.id).as_pymongo)
+
+# scene = Story.objects(id=s2.id)
+# print(scene)
+# for i in scene.pages:
+#     print(i.sentences)
+
+# action = Actions.objects()
+# print(action)

@@ -154,7 +154,7 @@ class TestCase(unittest.TestCase):
         result = w.aggregation(s1, s2)
         if "_charGender" in result:
             self.assertSequenceEqual(result,
-                                     ["john", "likes", "cats", "and", "there", "_charGender", "hates", "dogs"],
+                                     ["john", "likes", "cats", "and", "_charGender", "hates", "dogs"],
                                      "capitalisation anomaly aggregation failed")
         else:
             self.assertSequenceEqual(result,
@@ -168,7 +168,7 @@ class TestCase(unittest.TestCase):
         result = w.aggregation(s1, s2)
         if "_charGender" in result:
             self.assertSequenceEqual(result,
-                                     ["john", "john", "john", "and", "there", "_charGender", "john", "john"],
+                                     ["john", "john", "john", "and", "_charGender", "john", "john"],
                                      "multiple character name aggregation failed")
         else:
             self.assertSequenceEqual(result,

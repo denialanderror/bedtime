@@ -2,6 +2,7 @@ from flask import render_template, redirect, flash, request
 from app import app, redis, models
 from story.writer import Writer
 from .forms import CharacterCreator, Feedback
+
 import random
 import ast
 
@@ -12,16 +13,16 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/again', methods=['GET', 'POST'])
+# @app.route('/again', methods=['GET', 'POST'])
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     """Page for user input for story generation.
     Redirects to the newly created story once all inputs are valid.
     User information (IP and device accessed) is logged for analytics"""
-    user = "IP: %s Device: %s" % (request.remote_addr,
-                                  request.user_agent.platform + " " + request.user_agent.browser)
-    if request.path == '/again':
-        app.logger.info("Repeat visit!")
+    # user = "IP: %s Device: %s" % (request.remote_addr,
+    #                               request.user_agent.platform + " " + request.user_agent.browser)
+    # if request.path == '/again':
+    #     app.logger.info("Repeat visit!")
     form = CharacterCreator()
     if form.validate_on_submit():
         story_id = Writer(form.hero.data, form.kind.data, form.gender.data, form.item.data).generate()
@@ -35,10 +36,14 @@ def story(story_id, page):
     Once the story is finished, the page redirects to the create screen"""
     page = int(page)
     title = "Bedtime - Story ID:  %s" % story_id
-    data = redis.zrange("story_id:" + story_id, page, page)
-    if not data:
+    # data = redis.zrange("story_id:" + story_id, page, page)
+    # if not data:
+    #     return redirect('/ending/' + story_id)
+    # scene = ast.literal_eval(data[0])
+    try:
+        scene = models.Story.objects(id=story_id).distinct('pages')[page].sentences
+    except IndexError:
         return redirect('/ending/' + story_id)
-    scene = ast.literal_eval(data[0])
     page += 1
     image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
                            "turkey", "turtle", "wolf"]) + ".png"
