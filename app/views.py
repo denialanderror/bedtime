@@ -1,10 +1,9 @@
-from flask import render_template, redirect, flash, request
-from app import app, redis, models
+from flask import render_template, redirect, request
+from app import app, models
 from story.writer import Writer
 from .forms import CharacterCreator, Feedback
 
 import random
-import ast
 
 
 @app.route('/')
@@ -25,7 +24,7 @@ def create():
     #     app.logger.info("Repeat visit!")
     form = CharacterCreator()
     if form.validate_on_submit():
-        story_id = Writer(form.hero.data, form.kind.data, form.gender.data, form.item.data).generate()
+        story_id = Writer(form.hero.data, form.kind.data, form.gender.data, form.item.data, 6).generate()
         return redirect('/story/' + str(story_id) + "/0")
     return render_template('create.html', form=form)
 
@@ -33,13 +32,9 @@ def create():
 @app.route('/story/<story_id>/<page>')
 def story(story_id, page):
     """Pages of the user's story appear here.
-    Once the story is finished, the page redirects to the create screen"""
+    Once the story is finished, the page redirects to the ending screen for feedback"""
     page = int(page)
     title = "Bedtime - Story ID:  %s" % story_id
-    # data = redis.zrange("story_id:" + story_id, page, page)
-    # if not data:
-    #     return redirect('/ending/' + story_id)
-    # scene = ast.literal_eval(data[0])
     try:
         scene = models.Story.objects(id=story_id).distinct('pages')[page].sentences
     except IndexError:
@@ -52,11 +47,15 @@ def story(story_id, page):
 
 @app.route('/about')
 def about():
+    """Quick page about the author"""
     return render_template('about.html')
 
 
 @app.route('/feedback/<story_id>', methods=['GET', 'POST'])
 def feedback(story_id):
+    """Page is reached on user's request after giving initial Star rating.
+    Any feedback given is added to the existing user record taken from Ending.
+    Unanswered survey questions are not recorded"""
     form = Feedback()
     if request.method == 'POST':
         f = models.Feedback.objects(story_id=int(story_id))
@@ -80,6 +79,10 @@ def contribute():
 
 @app.route('/ending/<story_id>', methods=['GET', 'POST'])
 def ending(story_id):
+    """Page reached once story has been concluded.
+    Users can share the story on Social Media, which will direct users to
+    the beginning of the story.
+    Users can rate the story using a five star system - JQuery POSTs the responses"""
     url = request.url_root + "story/" + story_id + "/0"
     if request.method == 'POST':
         # checks if rating is already given before updating

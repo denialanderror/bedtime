@@ -5,6 +5,11 @@ from story.creature import Creature
 
 class Location(object):
     def __init__(self, character=None):
+        """Location attributes with multiple matching terms are stored as a name rather
+        than term e.g. Size is stored as either big, medium or small, each of which has matching
+        terms
+        Locations are created without a specified character as default, though characters can be
+        specified"""
         self.location = random.choice(Terms.objects(category='location').distinct('terms'))
         self.colour = random.choice(Terms.objects(category='colour').distinct('terms'))
         self._size = random.choice(Terms.objects(category='size').distinct('name'))
@@ -13,6 +18,7 @@ class Location(object):
             self.character = Creature()
         else:
             self.character = character
+
 
     @property
     def size(self):
@@ -23,6 +29,9 @@ class Location(object):
         return random.choice(Terms.objects(category='mood', name=self._mood).distinct('terms'))
 
     def description(self):
+        """Produces a randomised description of the character from their attributes
+        The number of attributes returned is based on a randomly generated number
+        :returns List"""
         choices = [self.colour, self.size, self.mood]
         roll = random.random()
         if roll < 0.1:

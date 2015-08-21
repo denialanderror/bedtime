@@ -4,6 +4,8 @@ from wtforms.validators import DataRequired, length, optional
 
 
 class CharacterCreator(Form):
+    """Validated using WTForms validators to ensure compliance with the parameter requirements
+    of database and story generator"""
     author = StringField('author', validators=[DataRequired(u"We need this to create the story!"),
                                                length(max=30, message=u"Please keep to 30 characters")])
     hero = StringField('hero', validators=[DataRequired(u"We need this to create the story!"),
@@ -17,8 +19,11 @@ class CharacterCreator(Form):
 
 
 class Feedback(Form):
+    """All parameters are optional other than parent_age. Optionality is dealt with in the view method
+    and so validation is not required.
+    Text fields are validated only for message length to comply with database restrictions"""
     parent_age = IntegerField("reader's age", validators=[DataRequired(u"Please enter your age")])
-    child_age = IntegerField("child's age", validators=[optional()])
+    child_age = IntegerField("child's age")
     read_by_child = RadioField('read by child', choices=[(True, "yes"), (False, "no")])
     original = RadioField('original', choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])
     enjoyable = RadioField('enjoyable', choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])

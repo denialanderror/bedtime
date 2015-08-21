@@ -3,6 +3,7 @@ from app.models import Texts, Actions
 import re
 
 _test = ['this is a normal sentence']  # for test purposes only, to avoid issues with random.choice
+_openings = random.choice(Texts.objects(category='openings').distinct('texts'))
 
 
 def phrase(expression):
@@ -16,7 +17,7 @@ def phrase(expression):
               "character_actions":
                   "_ref_expr_hero " + random.choice(
                       Actions.objects(category='character_actions').distinct('actions')) + " with _ref_expr_npc",
-              "creature_actions":
+              "npc_actions":
                   "_ref_expr_npc" + " " + random.choice(
                       Actions.objects(category='character_actions').distinct('actions')) + " with _ref_expr_hero",
               "questions": random.choice(Texts.objects(category='questions').distinct('texts')),

@@ -1,5 +1,11 @@
 from app.models import *
 
+"""
+This class is used solely for initial generation of the database.
+It has no purpose within the application.
+"""
+
+# names taken from top 100 baby names for boys and girls of 2014
 _names = {"male": ['Muhammad', 'Oliver', 'Jack', 'Noah', 'Jacob', 'Charlie', 'Harry', 'Joshua', 'James',
                    'Ethan', 'Thomas', 'William', 'Henry', 'Oscar', 'Daniel', 'Max', 'Leo', 'George', 'Alfie',
                    'Alexander', 'Lucas', 'Logan', 'Dylan', 'Adam', 'Isaac', 'Finley', 'Samuel', 'Benjamin',
@@ -175,34 +181,16 @@ def populate_action(action_dict):
             entry = Actions(category=category, actions=dictionary['action'], reactions=dictionary['reaction'])
             entry.save()
 
-Story.objects.delete()
+"""Uncomment to clear the database.
+Do so before making changes to model/schema to prevent MongoDB exceptions"""
+# Story.objects.delete()
 # Actions.objects.delete()
 # Texts.objects.delete()
 # Terms.objects.delete()
+
+"""Uncomment to repopulate the database.
+Make deletions first unless fresh data is being used to prevent collisions.
+Story is populated when using the application so no pre-population is required"""
 # populate_action(action_dict)
 # populate_text(text_dict)
 # populate_term(term_dict)
-
-p = Pages(page=1, sentences=["1", "2", "3", "4", "5", "6"])
-p1 = Pages(page=2, sentences=["11", "22", "33", "44", "55", "66"])
-p2 = Pages(page=3, sentences=["5", "6"])
-s = Story(pages=[p, p1, p2])
-s.save()
-
-
-scene = Story.objects(id=s.id).distinct('pages')[1].sentences
-print(scene)
-# print(scene.to_json())
-# for p in scene:
-#     print(p.sentences)
-#
-# print(scene[0].sentences)
-# print(scene = Story.objects.get(id=s.id).as_pymongo)
-
-# scene = Story.objects(id=s2.id)
-# print(scene)
-# for i in scene.pages:
-#     print(i.sentences)
-
-# action = Actions.objects()
-# print(action)

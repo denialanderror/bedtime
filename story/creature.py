@@ -6,7 +6,9 @@ _gender = ["male", "female"]
 
 class Creature(object):
     def __init__(self, name=None, kind=None, gender=None):
-        """all variables with multiple choices are stored as indexes"""
+        """Creature attributes with multiple matching terms are stored as a name rather
+        than term e.g. Size is stored as either big, medium or small, each of which has matching
+        terms"""
         if gender is None or gender not in _gender:
             self._gender = random.choice(_gender)
         else:
@@ -20,11 +22,11 @@ class Creature(object):
             self.kind = random.choice(Terms.objects(category='kind').distinct('terms'))
         else:
             self.kind = kind
-        self._colour = random.sample(Terms.objects(category='colour').distinct('terms'), 2)
-        self._pattern = random.choice(Terms.objects(category='pattern').distinct('terms'))
-        self._size = random.choice(Terms.objects(category='size').distinct('name'))
-        self._covering = random.choice(Terms.objects(category='covering').distinct('name'))
-        self._emotion = random.choice(Terms.objects(category='emotion').distinct('name'))
+        self.colour = random.sample(Terms.objects(category='colour').distinct('terms'), 2)
+        self._attern = random.choice(Terms.objects(category='pattern').distinct('terms'))
+        self.size = random.choice(Terms.objects(category='size').distinct('name'))
+        self.covering = random.choice(Terms.objects(category='covering').distinct('name'))
+        self.emotion = random.choice(Terms.objects(category='emotion').distinct('name'))
 
     @property
     def gender(self):
@@ -34,12 +36,17 @@ class Creature(object):
 
     @property
     def colour_mixer(self):
-        if self._pattern == "plain":
-            return self._colour[0]
+        """Returns a colour description based on pattern and colour attributes
+        :returns String"""
+        if self.pattern == "plain":
+            return self.colour[0]
         else:
-            return " ".join([self._colour[0], "and", self._colour[1], self._pattern])
+            return " ".join([self.colour[0], "and", self.colour[1], self.pattern])
 
     def ref_expr(self, full=True):
+        """Returns a full referring expression for the character
+        The shortened version is used when the character has already been referenced in the story
+        :returns String"""
         if full:
             return random.choice(["a {0} {1} named {2}".format(self.description(), self.kind, self.name),
                                  "{0} the {1} {2}".format(self.name, self.description(), self.kind)])
@@ -47,9 +54,12 @@ class Creature(object):
             return random.choice(["the {0} {1}".format(self.description(), self.kind), self.name])
 
     def description(self):
-        choices = [self.colour_mixer, random.choice(Terms.objects(category='size', name=self._size).distinct('terms')),
-                   random.choice(Terms.objects(category='emotion', name=self._emotion).distinct('terms')),
-                   random.choice(Terms.objects(category='covering', name=self._covering).distinct('terms'))]
+        """Produces a randomised description of the character from their attributes
+        The number of attributes returned is based on a randomly generated number
+        :returns List"""
+        choices = [self.colour_mixer, random.choice(Terms.objects(category='size', name=self.size).distinct('terms')),
+                   random.choice(Terms.objects(category='emotion', name=self.emotion).distinct('terms')),
+                   random.choice(Terms.objects(category='covering', name=self.covering).distinct('terms'))]
         roll = random.random()
         if roll < 0.2:
             return ""
