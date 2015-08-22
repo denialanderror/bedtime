@@ -11,23 +11,21 @@ class Terms(db.Document):
 class Texts(db.Document):
     """Story phrases for scenes"""
     category = db.StringField(max_length=20, unique=True)
-    texts = db.ListField(db.StringField(max_length=70))
+    texts = db.ListField(db.StringField(max_length=100))
 
 
 class Actions(db.Document):
     """Phrases related to actions and reactions"""
     category = db.StringField(max_length=20, unique=True)
-    actions = db.ListField(db.StringField(max_length=70))
-    reactions = db.ListField(db.StringField(max_length=70))
+    action = db.ListField(db.StringField(max_length=100))
+    reaction = db.ListField(db.StringField(max_length=100))
 
 
-class Questions(db.Document):
-    """Phrases related to actions and reactions"""
-    category = db.StringField(max_length=20, unique=True)
-    enquiry = db.ListField(db.StringField(max_length=70))
-    yes = db.ListField(db.StringField(max_length=70))
-    no = db.ListField(db.StringField(max_length=70))
-    angry_answer = db.ListField(db.StringField(max_length=70))
+class Answers(db.Document):
+    """Answers to different types of questions"""
+    category = db.StringField(max_length=12)
+    answer_type = db.StringField(max_length=12)
+    answers = db.ListField(db.StringField(max_length=100))
 
 
 class Pages(db.EmbeddedDocument):

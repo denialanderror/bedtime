@@ -32,15 +32,15 @@ class TestCase(unittest.TestCase):
                       "blank creature name create failed")
         self.assertIn(c.kind, Terms.objects(category='kind').distinct('terms'),
                       "blank creature kind create failed")
-        self.assertIn(c._colour[0], Terms.objects(category='colour').distinct('terms'),
+        self.assertIn(c.colour[0], Terms.objects(category='colour').distinct('terms'),
                       "blank creature colour a create failed")
-        self.assertIn(c._colour[1], Terms.objects(category='colour').distinct('terms'),
+        self.assertIn(c.colour[1], Terms.objects(category='colour').distinct('terms'),
                       "blank creature colour b create failed")
-        self.assertIn(c._pattern, Terms.objects(category='pattern').distinct('terms'),
+        self.assertIn(c.pattern, Terms.objects(category='pattern').distinct('terms'),
                       "blank creature pattern create failed")
-        self.assertIn(c._size, Terms.objects(category='size').distinct('terms'),
+        self.assertIn(c.size, Terms.objects(category='size').distinct('terms'),
                       "blank creature size create failed")
-        self.assertIn(c._covering, Terms.objects(category='covering').distinct('terms'),
+        self.assertIn(c.covering, Terms.objects(category='covering').distinct('terms'),
                       "blank creature covering create failed")
         self.assertIn(c._emotion, Terms.objects(category='emotion').distinct('terms'),
                       "blank creature emotion create failed")
@@ -51,19 +51,19 @@ class TestCase(unittest.TestCase):
 
     def test_Creature3(self):
         c = creature.Creature()
-        if c._pattern == 'plain':
-            self.assertEqual(c.colour_mixer, c._colour[0], "creature colour mixer plain failed")
+        if c.pattern == 'plain':
+            self.assertEqual(c.colour_mixer, c.colour[0], "creature colour mixer plain failed")
         else:
-            self.assertEqual(c.colour_mixer, "{0} and {1} {2}".format(c._colour[0], c._colour[1], c._pattern),
+            self.assertEqual(c.colour_mixer, "{0} and {1} {2}".format(c.colour[0], c.colour[1], c.pattern),
                              "creature colour mixer patterned failed")
 
     def test_Creature4(self):
         c = creature.Creature()
         # expands lists of terms into a flat list, in order to make the In assertion
         choices = [item for sublist in
-                   [c.colour_mixer.split(), Terms.objects(category='size', name=c._size).distinct('terms'),
+                   [c.colour_mixer.split(), Terms.objects(category='size', name=c.size).distinct('terms'),
                     Terms.objects(category='emotion', name=c._emotion).distinct('terms'),
-                    Terms.objects(category='covering', name=c._covering).distinct('terms')] for item in sublist]
+                    Terms.objects(category='covering', name=c.covering).distinct('terms')] for item in sublist]
         result = c.description().split()
         if not result:
             self.assertEqual("", "", "creature description empty failed")
@@ -95,7 +95,7 @@ class TestCase(unittest.TestCase):
         l = location.Location()
         # expands lists of terms into a flat list, in order to make the In assertion
         choices = [item for sublist in
-                   [[l.colour], Terms.objects(category='size', name=l._size).distinct('terms'),
+                   [[l.colour], Terms.objects(category='size', name=l.size).distinct('terms'),
                     Terms.objects(category='mood', name=l._mood).distinct('terms')] for item in sublist]
         result = l.description().split()
         if not result:
@@ -126,7 +126,7 @@ class TestCase(unittest.TestCase):
 
     # aggregation tests
     def test_aggregation1(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         s1 = ["john", "likes", "cats"]
         s2 = ["he", "hates", "dogs"]
         result = w.aggregation(s1, s2)
@@ -134,7 +134,7 @@ class TestCase(unittest.TestCase):
                                  "comma aggregation failed")
 
     def test_aggregation2(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         s1 = ["john", "likes", "cats"]
         s2 = ["john", "hates", "dogs"]
         result = w.aggregation(s1, s2)
@@ -148,7 +148,7 @@ class TestCase(unittest.TestCase):
                                      "referring expression aggregation failed")
 
     def test_aggregation3(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         s1 = ["john", "likes", "cats"]
         s2 = ["John", "hates", "dogs"]
         result = w.aggregation(s1, s2)
@@ -162,7 +162,7 @@ class TestCase(unittest.TestCase):
                                      "capitalisation anomaly aggregation failed")
 
     def test_aggregation4(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         s1 = ["john", "john", "john"]
         s2 = ["john", "john", "john"]
         result = w.aggregation(s1, s2)
@@ -176,7 +176,7 @@ class TestCase(unittest.TestCase):
                                      "multiple character name aggregation failed")
 
     def test_aggregation5(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         s1 = []
         s2 = []
         result = w.aggregation(s1, s2)
@@ -185,60 +185,50 @@ class TestCase(unittest.TestCase):
 
     # realise tests
     def test_realise1(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = ["john", "likes", "cats"]
         result = w.realise(sentence)
         self.assertEqual(result, "John likes cats.", "standard realisation failed")
 
     def test_realise2(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = ["_charName", "likes", "cats"]
         result = w.realise(sentence)
         self.assertEqual(result, "John likes cats.", "substitution realisation failed")
 
     def test_realise3(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = []
         result = w.realise(sentence)
         self.assertSequenceEqual(result, [], "empty list realisation failed")
 
     def test_realise4(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = ["_charName", "+", "cats", "=", "heaven"]
         result = w.realise(sentence)
         self.assertEqual(result, "John + cats = heaven.", "centre punctuation realisation failed")
 
     def test_realise5(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = ["?", "this", "should", "be", "capitalised"]
         result = w.realise(sentence)
         self.assertEqual(result, "?This should be capitalised.", "beginning capitalisation realisation failed")
 
     def test_realise6(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = ["should", "this", "have", "a", "full", "stop", "?"]
         result = w.realise(sentence)
         self.assertEqual(result, "Should this have a full stop?", "terminal punctuation realisation failed")
 
     def test_realise6(self):
-        w = writer.Writer(name="john boy", kind="pony", gender="male", quest="hat")
+        w = writer.Writer(name="john boy", kind="pony", gender="male", quest="hat", story_length=1)
         sentence = ["_charName", "!"]
         result = w.realise(sentence)
         self.assertEqual(result, "John Boy!", "double word name realisation failed")
 
-    # descriptions tests
-    def test_descriptions(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
-
-    # scene tests
     def test_scene1(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
-        w.story_index = len(w.locations)
-        self.assertEqual(w.story_index, 0, "story index mod scene fail")
-
-    def test_scene2(self):
-        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat")
-        w.story_index = len(w.locations) - 1
+        w = writer.Writer(name="john", kind="pony", gender="male", quest="hat", story_length=1)
+        w.story_index = w.story_length
         w.scene()
         self.assertTrue(w.end, "story end scene fail")
 

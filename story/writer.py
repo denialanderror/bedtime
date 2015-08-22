@@ -2,7 +2,7 @@ import string
 import random
 from .location import Location
 from .creature import Creature
-from app.models import Story, Pages, Texts, Actions
+from app.models import Story, Pages, Texts, Actions, Answers
 import re
 
 _test = ['this is a normal sentence']  # for test purposes only, to avoid issues with random.choice
@@ -38,6 +38,7 @@ class Writer(object):
                     '_npcName': self.characters[1].name,
                     '_npcKind': self.characters[1].kind,
                     '_npcGender': self.characters[1].gender,
+                    '_npcEmotion': self.characters[1].emotion,
                     '_npcDescription': self.characters[1].description(),
                     '_ref_expr_npc_full': self.characters[1].ref_expr(True),
                     '_ref_expr_npc': self.characters[1].ref_expr(False),
@@ -92,26 +93,64 @@ class Writer(object):
         This was originally done using a dict implementation of a switch statement but this resulted
         in all options being evaluated and making extraneous calls to the database"""
         # action/reaction
-        if category in ['npc_action', 'reaction']:
+        print(category)
+        if category in ['action', 'reaction']:
+            print(self.locations[0].character.emotion_action)
             expression = random.choice(
-                Actions.objects(self.locations[0].character.emotion + '_action').distinct(category))
-            # yes/no
-            if category == 'answer':
-                if self.locations[0].character.emotion == 'angry':
-                    category = 'angry_answer'
-                elif self.story_index == self.story_length - 1:
-                    category = 'yes'
-                else:
-                    category = 'no'
+                Actions.objects(category=self.locations[0].character.emotion_action).distinct(category))
+        # yes/no
+        elif category in ['answer', 'non_answer']:
+            if self.locations[0].character.emotion == 'angry':
+                answer_type = 'angry_answer'
+            elif self.story_index == self.story_length - 1:
+                answer_type = 'yes'
+            else:
+                answer_type = 'no'
+            expression = random.choice(
+                Answers.objects(category=category, answer_type=answer_type).distinct('answers'))
             # all other expressions
         else:
             expression = random.choice(Texts.objects(category=category).distinct('texts'))
         # post processing
         if category == 'opening':
-            expression = "once upon a time" + expression
+            expression = "once upon a time " + expression
         elif category == 'action':
             expression = "_ref_expr_npc" + " " + expression + " _ref_expr_hero"
         return re.findall(r"[\w']+|[-.,!?;:\"\[\]]", str(expression).strip())
+
+    def scene(self):
+        """Generates the scenes in between the middle and end of the story, where each scene is one page.
+        Sentence choices are lists of lists (the inner lists are to be aggregated) in order to use random.choice,
+        which then need to be flattened"""
+        sentences = []
+        roll = random.random()
+        if roll < 0.2:
+            # No character at this location so can't finish here...
+            sentences.append(random.choice([[['location', 'status'], ['no_npc', 'no_npc_action']],
+                                            [['location', 'no_npc'], ['no_npc_action', 'status']]]))
+        else:
+            # Location and NPC meeting options
+            sentences.append(random.choice([[['location', 'meet']],
+                                            [['location', 'status'], ['meet', 'description']]]))
+            if random.choice([True, False]) is True:
+                # Adds an interaction
+                sentences.append([['action', 'reaction']])  # PUT IN CHARACTER ACTIONS?
+            # Question and answer
+            sentences.append(random.choice([[['question'], ['answer']], [['non_question', 'non_answer']]]))
+
+        if self.story_index == self.story_length - 1 and (self.locations[1].character.emotion == 'angry' or roll < 0.2):
+            # Angry characters cannot answer and story must finish with one
+            self.story_length += 1
+        if self.story_index < self.story_length - 1:
+            sentences.append([['next']])
+        # flatten list
+        sentences = [item for sublist in sentences for item in sublist]
+        # transform phrases and aggregate
+        print(sentences)
+        sentences = [self.aggregation(phrases) for phrases in sentences]
+        # realise
+        sentences = [self.realise(sentence) for sentence in sentences]
+        return sentences
 
     def story(self):
         """Generates the next scene of the story, with separate beginning, middle and end."""
@@ -125,38 +164,6 @@ class Writer(object):
             return [self.realise(self.phrase("end")),
                     "And they all lived happily ever after.",
                     "The end."]
-
-    def scene(self):
-        """Generates the scenes in between the middle and end of the story, where each scene is one page.
-        Sentence choices are lists of lists (the inner lists are to be aggregated) in order to use random.choice,
-        which then need to be flattened"""
-        roll = random.Random() < 0.2
-        if roll:
-            # No character at this location so can't finish here...
-            sentences = random.choice([[['location', 'status'], ['no_npc', 'no_npc_action'], ['next']],
-                                       [['location', 'no_npc'], ['no_npc_action', 'status'], ['next']]])
-        else:
-            # Location and NPC meeting options
-            sentences = random.choice([[['location', 'meet']],
-                                       [['location', 'status'], ['meet', 'description']]])
-            if random.choice([True, False]) is True:
-                # Adds an interaction
-                sentences.append([['npc_action', 'reaction']]) # PUT IN CHARACTER ACTIONS?
-            # Question and answer
-            sentences.append(random.choice([[['question'], ['answer']], [['non_question', 'non_answer']]]))
-
-        if self.story_index == self.story_length - 1 and (self.locations[1].character.emotion == 'angry' or roll < 0.2):
-            # Angry characters cannot answer and story must finish with one
-            self.story_length += 1
-        if self.story_index < self.story_length - 1:
-            sentences.append([['next']])
-        # flatten list
-        sentences = [item for sublist in sentences for item in sublist]
-        # transform phrases and aggregate
-        sentences = [self.aggregation(phrases) for phrases in sentences]
-        # realise
-        sentences = [self.realise(sentence) for sentence in sentences]
-        return sentences
 
     def generate(self):
         """Creates story by adding scenes to pages until the end is reached.

@@ -67,6 +67,7 @@ term_dict = {'name': _name,
 
 def populate_term(term_dict):
     for category, dictionary in term_dict.items():
+        print(category)
         for name, terms in dictionary.items():
             entry = Terms(category=category, name=name, terms=terms)
             entry.save()
@@ -105,7 +106,7 @@ _no_npc = ["_heroName looked around but couldn't find anyone",
            "_heroName was all alone"]
 
 _no_npc_action = ["_heroName tried to look for the _item alone but it's hard without friends to help",
-                  "_heroName searched around a bit for the _item but got bored"
+                  "_heroName searched around a bit for the _item but got bored",
                   "\"this is a big place to search all by myself\" thought _heroName"]
 
 _description = ["_npcName looked very _npcEmotion to see _heroName",
@@ -117,6 +118,13 @@ _next = ["\"maybe I'll have better luck over by the _nextLocation ?\" thought _h
 _end = ["_heroName was so happy to get the _item back",
         "_heroName went home to the _location with the _item"]
 
+_question = ["\"have you seen my _item ?\" said _heroName",
+             "\"Do you know where my _item is ?\" asked _heroName",
+             "\"any idea where I could find my _item ?\" said _heroName"]
+
+_non_question = ["_heroName and _npcName searched the _location together",
+                 "_heroName and _npcName looked high and low"]
+
 text_dict = {'opening': _opening,
              'intro': _intro,
              'quest': _quest,
@@ -127,11 +135,14 @@ text_dict = {'opening': _opening,
              'no_npc_action': _no_npc_action,
              'description': _description,
              'next': _next,
-             'closes': _end}
+             'end': _end,
+             'question': _question,
+             'non_question': _non_question}
 
 
 def populate_text(text_dict):
     for category, texts in text_dict.items():
+        print(category)
         entry = Texts(category=category, texts=texts)
         entry.save()
 
@@ -181,63 +192,69 @@ _scared_action = {'action': ["hid from",
                                "_HeroName tried their best to comfort them",
                                "_HeroName tried to look less scary"]}
 
-action_dict = {'character_actions': _character_action,
-               'happy_actions': _happy_action,
-               'angry_actions': _angry_action,
-               'scared_actions': _scared_action}
+action_dict = {'character_action': _character_action,
+               'happy_action': _happy_action,
+               'angry_action': _angry_action,
+               'scared_action': _scared_action}
 
 
 def populate_action(action_dict):
     for category, dictionary in action_dict.items():
-        entry = Actions(category=category, actions=dictionary['action'], reactions=dictionary['reaction'])
+        print(category)
+        entry = Actions(category=category, action=dictionary['action'], reaction=dictionary['reaction'])
         entry.save()
 
 
-_question = {'enquiry': ["\"have you seen my _item ?\" said _heroName",
-                         "\"Do you know where my _item is ?\" asked _heroName",
-                         "\"any idea where I could find my _item ?\" said _heroName"],
-             'yes': ["\"it's just over there\" said _npcName",
-                     "\"yes I have it it in my pocket\" said _npcName",
-                     "\"you're in luck, it's right here\" said _npcName"],
-             'no': ["\"I'm not sure if I've seen it\" said _npcName",
-                    "\"sorry but no\" said _npcName",
-                    "\"I can't help with that, sorry\" said _npcName"],
-             'angry_answer': ["\"it's not here, now go away!\" growled _npcName",
-                              "\"i'm not going to help you\" snapped _npcName",
-                              "_npcName growled back and didn't sound very friendly"]}
+_answer = {'yes': ["\"it's just over there\" said _npcName",
+                   "\"yes I have it it in my pocket\" said _npcName",
+                   "\"you're in luck, it's right here\" said _npcName"],
+           'no': ["\"I'm not sure if I've seen it\" said _npcName",
+                  "\"sorry but no\" said _npcName",
+                  "\"I can't help with that, sorry\" said _npcName"],
+           'angry_answer': ["\"it's not here, now go away!\" growled _npcName",
+                            "\"i'm not going to help you\" snapped _npcName",
+                            "_npcName growled back and didn't sound very friendly"]}
 
-_non_question = {'enquiry': ["_heroName and _npcName searched the _location together",
-                             "_heroName and _npcName looked high and low"],
-                 'yes': ["there it was underneath a rock!",
-                         "\"oops,\" said _heroName \"it was in my pocket all this time!\""],
-                 'no': ["it was a long day of searching but they couldn't find the _item anywhere",
-                        "\"thanks for helping, _npcName\" said _heroName \"but I don't think it's here\"",
-                        "\"No luck I'm afraid\" said _npcName"],
-                 'angry_answer': ["they couldn't find the _item and _npcName teased _heroName about it",
-                                  "\"what a waste of time that was!\" snapped _npcName",
-                                  "maybe if _npcName wasn't so grumpy and helped a bit more, they may have found it"]}
+_non_answer = {'yes': ["there it was underneath a rock!",
+                       "\"oops,\" said _heroName \"it was in my pocket all this time!\""],
+               'no': ["it was a long day of searching but they couldn't find the _item anywhere",
+                      "\"thanks for helping, _npcName\" said _heroName \"but I don't think it's here\"",
+                      "\"No luck I'm afraid\" said _npcName"],
+               'angry_answer': ["they couldn't find the _item and _npcName teased _heroName about it",
+                                "\"what a waste of time that was!\" snapped _npcName",
+                                "maybe if _npcName wasn't so grumpy and helped a bit more, they may have found it"]}
 
-question_dict = {'question': _question,
-                 'non_question': _non_question}
+answer_dict = {'answer': _answer,
+               'non_answer': _non_answer}
 
 
-def populate_question(question_dict):
-    for category, dictionary in question_dict.items():
-        entry = Actions(category=category, enquiry=dictionary['enquiry'], yes=dictionary['yes'],
-                        no=dictionary['no'], angry_answer=dictionary['angry_answer'])
-        entry.save()
+def populate_answer(answer_dict):
+    for category, dictionary in answer_dict.items():
+        print(category)
+        for answer_type, answers in dictionary.items():
+            entry = Answers(category=category, answer_type=answer_type, answers=answers)
+            entry.save()
+
+def populate_term(term_dict):
+    for category, dictionary in term_dict.items():
+        print(category)
+        for name, terms in dictionary.items():
+            entry = Terms(category=category, name=name, terms=terms)
+            entry.save()
 
 
 """Uncomment to clear the database.
 Do so before making changes to model/schema to prevent MongoDB exceptions"""
-# Story.objects.delete()
-# Actions.objects.delete()
-# Texts.objects.delete()
-# Terms.objects.delete()
+Answers.objects.delete()
+Story.objects.delete()
+Actions.objects.delete()
+Texts.objects.delete()
+Terms.objects.delete()
 
 """Uncomment to repopulate the database.
 Make deletions first unless fresh data is being used to prevent collisions.
 Story is populated when using the application so no pre-population is required"""
-# populate_action(action_dict)
-# populate_text(text_dict)
-# populate_term(term_dict)
+populate_answer(answer_dict)
+populate_action(action_dict)
+populate_text(text_dict)
+populate_term(term_dict)

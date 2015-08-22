@@ -33,6 +33,10 @@ class Creature(object):
         return random.choice(Terms.objects(category='emotion', name=self._emotion).distinct('terms'))
 
     @property
+    def emotion_action(self):
+        return self._emotion + "_action"
+
+    @property
     def gender(self):
         if self._gender == "male":
             return "he"
