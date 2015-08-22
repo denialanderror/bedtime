@@ -35,3 +35,22 @@ class Feedback(Form):
     like = StringField("like", validators=[length(max=255, message=u"Please keep to 255 characters")])
     dislike = StringField("dislike", validators=[length(max=255, message=u"Please keep to 255 characters")])
     comments = StringField("comments", validators=[length(max=255, message=u"Please keep to 255 characters")])
+
+
+class Contribute(Form):
+    """Allows users to contribute their own texts and phrases (currently only for characters and locations)
+    Validated using WTForms validators to ensure compliance with the parameter requirements
+    of database and story generator"""
+    name_option = SelectField("name_option", choices=['male', 'female'])
+    name = StringField('name', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    kind = StringField('kind', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    pattern = StringField('pattern', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    location = StringField('location', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    size_option = SelectField("name_option", choices=['male', 'female'])
+    size = StringField('size', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    covering_option = SelectField("name_option", choices=['male', 'female'])
+    covering = StringField('covering', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    emotion_option = SelectField("name_option", choices=['male', 'female'])
+    emotion = StringField('emotion', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    mood_option = SelectField("name_option", choices=['male', 'female'])
+    mood = StringField('mood', validators=[length(max=20, message=u"Please keep to 20 characters")])

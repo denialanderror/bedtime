@@ -21,6 +21,15 @@ class Actions(db.Document):
     reactions = db.ListField(db.StringField(max_length=70))
 
 
+class Questions(db.Document):
+    """Phrases related to actions and reactions"""
+    category = db.StringField(max_length=20, unique=True)
+    enquiry = db.ListField(db.StringField(max_length=70))
+    yes = db.ListField(db.StringField(max_length=70))
+    no = db.ListField(db.StringField(max_length=70))
+    angry_answer = db.ListField(db.StringField(max_length=70))
+
+
 class Pages(db.EmbeddedDocument):
     """Scenes and their component sentences"""
     page = db.IntField()

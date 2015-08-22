@@ -3,14 +3,17 @@ from app.models import Texts, Actions
 import re
 
 _test = ['this is a normal sentence']  # for test purposes only, to avoid issues with random.choice
-_openings = random.choice(Texts.objects(category='openings').distinct('texts'))
+
+
+def query(category):
+    return random.choice(Texts.objects(category=category).distinct('texts'))
 
 
 def phrase(expression):
     """Returns a list representation of a randomised string from the requested
     expression type, using regex to maintain separation of punctuation within
     the lists"""
-    switch = {"openings": random.choice(Texts.objects(category='openings').distinct('texts')),
+    switch = {"openings": "once upon a time",
               "intro": random.choice(Texts.objects(category='intro').distinct('texts')),
               "location_actions": random.choice(Texts.objects(category='location_actions').distinct('texts')),
               "meet_actions": random.choice(Texts.objects(category='meet_actions').distinct('texts')),

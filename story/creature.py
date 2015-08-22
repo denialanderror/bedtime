@@ -23,10 +23,14 @@ class Creature(object):
         else:
             self.kind = kind
         self.colour = random.sample(Terms.objects(category='colour').distinct('terms'), 2)
-        self._attern = random.choice(Terms.objects(category='pattern').distinct('terms'))
+        self.pattern = random.choice(Terms.objects(category='pattern').distinct('terms'))
         self.size = random.choice(Terms.objects(category='size').distinct('name'))
         self.covering = random.choice(Terms.objects(category='covering').distinct('name'))
-        self.emotion = random.choice(Terms.objects(category='emotion').distinct('name'))
+        self._emotion = random.choice(Terms.objects(category='emotion').distinct('name'))
+
+    @property
+    def emotion(self):
+        return random.choice(Terms.objects(category='emotion', name=self._emotion).distinct('terms'))
 
     @property
     def gender(self):
@@ -58,7 +62,7 @@ class Creature(object):
         The number of attributes returned is based on a randomly generated number
         :returns List"""
         choices = [self.colour_mixer, random.choice(Terms.objects(category='size', name=self.size).distinct('terms')),
-                   random.choice(Terms.objects(category='emotion', name=self.emotion).distinct('terms')),
+                   random.choice(Terms.objects(category='emotion', name=self._emotion).distinct('terms')),
                    random.choice(Terms.objects(category='covering', name=self.covering).distinct('terms'))]
         roll = random.random()
         if roll < 0.2:
@@ -69,7 +73,3 @@ class Creature(object):
             return " ".join(choice)
         else:
             return random.choice(choices)
-
-    def __repr__(self):
-        return " ".join([self._gender, self.name, self._colour[0], self._colour[1], self._pattern, self._size,
-                         self._covering, self._emotion])
