@@ -9,6 +9,7 @@ _test = ['this is a normal sentence']  # for test purposes only, to avoid issues
 
 
 class Writer(object):
+    """Writer class is the primary story generating mechanism"""
     def __init__(self, author, name, kind, gender, item, story_length):
         # hero = Creature(name, kind, gender)
         hero = Creature(name=name, gender=gender)

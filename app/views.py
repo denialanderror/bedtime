@@ -76,16 +76,18 @@ def feedback(story_id):
 
 @app.route('/contribute', methods=['GET', 'POST'])
 def contribute():
+    """Page allows users to submit their own terms and phrases to be used in
+    character generation. Submitted data is stored in a temporary Mongo Document
+    for moderation purposes before being added to the generation Documents"""
     form = Contribute()
     if request.method == 'POST':
         data = form.data
-        # removing unanswered fields and corresponding select fields
+        # removing unanswered fields
         options = {}
         for key, value in form.data.items():
             if value is None or value == 'None' or value == '':
                 if key[-7:] != 'option':
                     del data[key]
-                    del data[key + '_option']
             # adding select fields to options dict for matching
             if key[-7:] == '_option':
                 options[key[:-7]] = value
@@ -94,7 +96,6 @@ def contribute():
         for category, name in options.items():
             for k, terms in data.items():
                 if category == k:
-                    print(terms)
                     models.ContributeTerms.objects.filter(category=category, name=name).update(add_to_set__terms=terms)
     return render_template('contribute.html', form=form)
 
