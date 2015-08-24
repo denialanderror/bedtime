@@ -52,8 +52,20 @@
 			</div>
 
 			<div class="small-12 columns">
-				<button tabindex="0" type="submit"class="round button" value="Submit">Contribute!</button>
+				<button tabindex="0" type="submit"class="round button" value="Submit" data-reveal-id="thanks">Contribute!</button>
 			</div>
 		</form>
+	</div>
+
+	<div id="thanks" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+		<div class="lead">
+			<p class="lead" id="modalTitle">Thanks for contributing!</p>
+			<p>Your submissions will be looked over by a moderator shortly (to keep this website family-friendly).</p>
+		</div>
+		<div class="small-6 columns">
+			<a class="button radius custom-close-reveal-modal">Add more</a>
+		</div>
+		<a href="{{url_for('index')}}" class="button radius">I'm finished</a>
+		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
 {% endblock %}

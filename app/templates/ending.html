@@ -4,12 +4,11 @@
 	<div class="content">
 		<p>Thanks for reading!</p>
 		<p>Please rate this story and share with your friends!</p>
-		<ul class="share-buttons inline-list">
-			<li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url }}&t=Bedtime%20-%20A%20bedtime%20story%20generator" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-square fa-2x"></i></a></li>
-			<li><a href="https://twitter.com/intent/tweet?source={{ url }}&text=Bedtime%20-%20A%20bedtime%20story%20generator:%20http%3A%2F%2F46.101.35.127" target="_blank" title="Tweet"><i class="fa fa-twitter-square fa-2x"></i></a></li>
-			<li><a href="http://www.tumblr.com/share?v=3&u={{ url }}&t=Bedtime%20-%20A%20bedtime%20story%20generator&s=" target="_blank" title="Post to Tumblr"><i class="fa fa-tumblr-square fa-2x"></i></a></li>
-			<li><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2F46.101.35.127&description=Want%20to%20read%20a%20bedtime%20story%3F%20See%20the%20one%20I've%20just%20made%20or%20create%20one%20yourself!" target="_blank" title="Pin it"><i class="fa fa-pinterest-square fa-2x"></i></a></li>
-			<li><a href="mailto:?subject=Bedtime%20-%20A%20bedtime%20story%20generator&body=Want%20to%20read%20a%20bedtime%20story%3F%20See%20the%20one%20I've%20just%20made%20or%20create%20one%20yourself!:%20{{ url }}" target="_blank" title="Email"><i class="fa fa-envelope-square fa-2x"></i></a></li>
+		<ul class="share-buttons">
+		  <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fbedtime.samueltjoseph.com&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><img src="{{ url_for('static', filename='img/Facebook.svg')}}"></a></li>
+		  <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fbedtime.samueltjoseph.com&text=:%20http%3A%2F%2Fbedtime.samueltjoseph.com&via=denial_error" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><img src="{{ url_for('static', filename='img/Twitter.svg')}}"></a></li>
+		  <li><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fbedtime.samueltjoseph.com&description=" target="_blank" title="Pin it" onclick="window.open('http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(document.URL) + '&description=' +  encodeURIComponent(document.title)); return false;"><img src="{{ url_for('static', filename='img/Pinterest.svg')}}"></a></li>
+		  <li><a href="mailto:?subject=&body=:%20http%3A%2F%2Fbedtime.samueltjoseph.com" target="_blank" title="Email" onclick="window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' +  encodeURIComponent(document.URL)); return false;"><img src="{{ url_for('static', filename='img/Email.svg')}}"></a></li>
 		</ul>
 
 		<div id="thanks" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">

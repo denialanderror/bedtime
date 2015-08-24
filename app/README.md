@@ -5,12 +5,7 @@ TODO
 
 Remove (or improve) images
 Clean up grammar
-Make responsive
-Add story length field
 Sort out mobile menu
-sort out mobile footer
-social media sharing
-Add acknowledgement for contribute
 Sort email error messages
 
 MAYBES
@@ -18,3 +13,6 @@ MAYBES
 login for admin
 evaluation process
 settings
+improve social media sharing
+fix mobile footer
+Make responsive better

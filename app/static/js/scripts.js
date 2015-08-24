@@ -1,7 +1,7 @@
 // opens create modal on page load
-$(document).ready(function(){
-    $('#create').foundation('reveal', 'open')
-});
+//$(document).ready(function(){
+//    $('#create').foundation('reveal', 'open')
+//});
 
 // sends star rating to Flask without reloading page
 $('#ratings').find('input').on('change', function() {
@@ -15,3 +15,8 @@ $('#ratings').find('input').on('change', function() {
 $('a.custom-close-reveal-modal').click(function(){
     $('#thanks').foundation('reveal', 'close');
 });
+
+$("#create-submit").click(function() {
+      $.post( "/index", $('#create-form').serialize());
+});
+

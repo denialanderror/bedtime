@@ -3,7 +3,7 @@
 <div id="content">
 	<div class="row book">
 
-	<div class="hidden-for-medium-down large-6 columns page left">
+	<div class="hidden-for-small-down medium-6 columns page">
 		{% if image %}
 			<div class="image">
 				<img src="{{url_for('static', filename='img/characters/')}}{{image}}">
@@ -13,7 +13,7 @@
 		{% endif %}
 	</div>
 
-	<div class="medium-12 large-6 columns page right">
+	<div class="small-12 medium-6 columns page">
 		{% block content %}{% endblock %}
 	</div>
 </div>

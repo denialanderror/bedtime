@@ -3,16 +3,15 @@
   src: url(../fonts/rosecaps.TTF)
 }
 
-/*@font-face {*/
-  /*font-family: bouwsma;*/
-  /*src: url(../fonts/BouwsUnc.ttf)*/
-/*}*/
-
 body {
   font-family: 'Coming Soon', cursive;
   background-image: url("../img/school.png");
   padding-bottom: 30px;
 }
+
+/*body p {*/
+  /*font-size: 28px;*/
+/*}*/
 
 #wrapper {
 	min-height:100%;
@@ -35,8 +34,8 @@ body {
 
 .feedback {
   padding-top: 10%;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 12%;
+  padding-right: 6%;
 }
 
 .row {
@@ -45,31 +44,34 @@ body {
 }
 
 .book {
-  margin-top: 1.5rem;
+  width: 100%;
+  position: relative;
 }
-  .book .page {
-    width: 520px;
-    height: 720px;
-    background-size: 100%;
-    position: relative;
-  }
 
-  .book .left {
-    background: url(../img/bookleft.png) left no-repeat;
-
+@media only screen {
+  .book {
+    height: 45rem;
+    background: url(../img/scroll.svg) no-repeat center;
+    background-size: 100% 100%;
   }
+}
 
-  .book .right {
-    background: url(../img/bookright.png) right no-repeat;
+@media only screen and (min-width: 40.063em) {
+  .book {
+    height: 45rem;
+    margin-top: 1.5rem;
+    background: url(../img/book.svg) no-repeat center;
+    background-size: 100% 100%;
   }
+}
 
-  .book .front {
-    background: url(../img/book.png) center no-repeat;
-  }
+.page {
+  height: 100%;
+}
 
 .content {
-  padding-top: 10%;
-  padding-left: 5%;
+  padding-top: 5%;
+  padding-left: 0%;
   padding-right: 10%;
 }
   .content p {
@@ -78,7 +80,7 @@ body {
 
   .content p:first-child:first-letter {
     font-family: rosecaps;
-    font-size : 200%;
+    font-size : 250%;
     width : 1em;
     color : black;
   }
@@ -89,7 +91,7 @@ body {
 }
 
 .image {
-  padding: 50%;
+  padding: 40%;
   margin: 0 auto;
 }
   .image img {
@@ -108,7 +110,7 @@ body {
 .next {
   position: absolute;
   bottom: 5%;
-  right: 10%;
+  right: 15%;
 }
 
 .form {
@@ -124,15 +126,19 @@ body {
   left: 50%;
 }
 
-ul.share-buttons {
-  padding: 2rem;
+ul.share-buttons{
+  list-style: none;
+  padding: 0;
 }
 
-ul.share-buttons a {
-  color: darkred;
+ul.share-buttons li{
+  display: inline;
+  padding: 10px;
 }
 
-
+ul.share-buttons img{
+  width: 40px;
+}
 
 .logo-wrapper {
   position: relative;

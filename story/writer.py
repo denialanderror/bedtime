@@ -18,7 +18,7 @@ class Writer(object):
         self.characters = [hero, hero]  # added twice to correctly initialise list
         self.story_index = 1
         self.item = item
-        self.story_length = story_length
+        self.story_length = int(story_length)
         self.locations = [Location(), Location()]
         self.end = False
 
@@ -96,9 +96,7 @@ class Writer(object):
         This was originally done using a dict implementation of a switch statement but this resulted
         in all options being evaluated and making extraneous calls to the database"""
         # action/reaction
-        print(category)
         if category in ['action', 'reaction']:
-            print(self.locations[0].character.emotion_action)
             expression = random.choice(
                 Actions.objects(category=self.locations[0].character.emotion_action).distinct(category))
         # yes/no

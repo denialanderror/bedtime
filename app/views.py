@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request, flash
 from app import app, models
 from story.writer import Writer
 from .forms import CharacterCreator, Feedback, Contribute
@@ -6,28 +6,15 @@ from .forms import CharacterCreator, Feedback, Contribute
 import random
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
-
-# @app.route('/again', methods=['GET', 'POST'])
-@app.route('/create', methods=['GET', 'POST'])
-def create():
-    """Page for user input for story generation.
-    Redirects to the newly created story once all inputs are valid.
-    User information (IP and device accessed) is logged for analytics"""
-    # user = "IP: %s Device: %s" % (request.remote_addr,
-    #                               request.user_agent.platform + " " + request.user_agent.browser)
-    # if request.path == '/again':
-    #     app.logger.info("Repeat visit!")
     form = CharacterCreator()
-    if form.validate_on_submit():
+    if form.validate():
         story_id = Writer(form.author.data, form.hero.data, form.kind.data, form.gender.data, form.item.data,
-                          6).generate()
+                          int(form.length.data)).generate()
         return redirect('/story/' + str(story_id) + "/start")
-    return render_template('create.html', form=form)
+    return render_template('index.html', form=form)
 
 
 @app.route('/story/<story_id>/<page>')
@@ -109,7 +96,7 @@ def ending(story_id):
     url = request.url_root + "story/" + story_id + "/0"
     if request.method == 'POST':
         # checks if rating is already given before updating
-        models.Feedback.objects(story_id=int(story_id)).update_one(
+        models.Feedback.objects(story_id=story_id).update_one(
             story_id=story_id, ip=request.remote_addr, platform=request.user_agent.platform,
             browser=request.user_agent.browser, rating=request.form['rating'], upsert=True)
     return render_template('ending.html', url=url, story_id=story_id)

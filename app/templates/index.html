@@ -6,6 +6,44 @@
 		<p> Click the arrow below to start your story</p>
 	</div>
 	<div class="next">
-		<a href="{{ url_for('create')}}"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
+		<a data-reveal-id="create"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
+	</div>
+
+		<div id="create" class=" small reveal-modal" data-reveal aria-labelledby="form" aria-hidden="true" role="form">
+
+		<form class="form" action="" method="post" name="create" id="create-form">
+			{{form.hidden_tag()}}
+			<div class="large-8 columns">
+				<label for="author">What is your name?</label>
+				<input id="author" name="author" type="text" value="" />
+			</div>
+			<div class="large-8 columns">
+				<label>how long should we make this story?</label>
+				<input id="length-0" name="length" type="radio" value="4" /><label for="length-0">short</label>
+				<input id="length-1" name="length" type="radio" value="6" /><label for="length-1">medium</label>
+				<input id="length-1" name="length" type="radio" value="8" /><label for="length-2">long</label>
+			</div>
+			<div class="large-8 columns">
+				<label for="hero">What is your character called?</label>
+				<input id="hero" name="hero" type="text" value="" />
+			</div>
+			{#            <div class="large-8 columns">#}
+			{#                <label for="kind">What sort of animal are they?</label>#}
+			{#                <input id="kind" name="kind" type="text" value="" placeholder="e.g. cat, dog..." />#}
+			{#            </div>#}
+			<div class="large-8 columns">
+				<label>Are they a boy or a girl</label>
+				<input id="gender-0" name="gender" type="radio" value="male" /><label for="gender-0">boy</label>
+				<input id="gender-1" name="gender" type="radio" value="female" /><label for="gender-1">girl</label>
+			</div>
+			<div class="large-8 columns">
+				<label for="item">And finally, this story is all about finding something that has gone missing. What
+					has your character lost?</label>
+				<input id="item" name="item" type="text" value="" placeholder="e.g. favourite hat, sock..." />
+			</div>
+		</form>
+			<button class="round button"id="create-submit">Create!</button>
+		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+
 	</div>
 {% endblock %}

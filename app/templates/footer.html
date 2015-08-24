@@ -1,10 +1,12 @@
-<script src="/static/js/vendor/jquery.js"></script>
 <script src="/static/js/foundation.min.js"></script>
+  <script src="/static/js/foundation/foundation.interchange.js"></script>
 <script>$(document).foundation();</script>
 <script>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 <script src="/static/js/scripts.js"></script>
 
-<div id="footer">Bedtime was created by Sam Joseph for his 2015 University of Birmingham MSc Computer Science summer project</div>
+<div id="footer" class="show-for-large-only large-12 columns">
+	Bedtime was created by Sam Joseph for his 2015 University of Birmingham MSc Computer Science summer project
+</div>
 </div>
 
 </body>

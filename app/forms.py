@@ -17,6 +17,7 @@ class CharacterCreator(Form):
                         validators=[DataRequired(u"We need this to create the story!")])
     item = StringField('item', validators=[DataRequired(u"We need this to create the story!"),
                                            length(max=20, message=u"Please keep to 20 characters")])
+    length = RadioField('length', choices=[('4', 'short'), ('6', 'medium'), ('8', 'long')])
 
 
 class Feedback(Form):
