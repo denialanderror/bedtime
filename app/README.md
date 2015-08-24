@@ -3,12 +3,15 @@ Bedtime story generator in Python
 
 TODO
 
-Exception handling
-Error pages
-Documentation
-Image generation
-Better language generation
-Social media sharing
-Descriptions
-Better 'kind' nouns (either animals or stronger descriptions)
-vocabulary matching for age range
+Remove images
+Clean up grammar
+Make responsive
+Add story length field
+Sort out mobile menu
+sort out mobile footer
+social media sharing
+
+MAYBES
+
+login for admin
+evaluation process

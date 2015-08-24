@@ -2,11 +2,19 @@
 
 {% block content %}
 	<div class="content">
-		{% for line in scene %}
-			<p>
-				{{ line }}
-			</p>
-		{% endfor %}
+		{% if author %}
+			<div class="title">
+				<p>{{ title }}</p>
+				<p>by</p>
+				<p>{{ author }}</p>
+			</div>
+		{% else %}
+			{% for line in scene %}
+				<p>
+					{{ line }}
+				</p>
+			{% endfor %}
+		{% endif %}
 	</div>
 	<div class="next">
 		<a href="{{ url_for('story', story_id=story_id, page=page) }}">

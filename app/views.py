@@ -1,7 +1,7 @@
 from flask import render_template, redirect, request
 from app import app, models
 from story.writer import Writer
-from .forms import CharacterCreator, Feedback
+from .forms import CharacterCreator, Feedback, Contribute
 
 import random
 
@@ -24,8 +24,9 @@ def create():
     #     app.logger.info("Repeat visit!")
     form = CharacterCreator()
     if form.validate_on_submit():
-        story_id = Writer(form.hero.data, form.kind.data, form.gender.data, form.item.data, 6).generate()
-        return redirect('/story/' + str(story_id) + "/0")
+        story_id = Writer(form.author.data, form.hero.data, form.kind.data, form.gender.data, form.item.data,
+                          6).generate()
+        return redirect('/story/' + str(story_id) + "/start")
     return render_template('create.html', form=form)
 
 
@@ -33,8 +34,11 @@ def create():
 def story(story_id, page):
     """Pages of the user's story appear here.
     Once the story is finished, the page redirects to the ending screen for feedback"""
+    t = models.Story.objects().get(id=story_id)
+    if page == 'start':
+        page = 0
+        return render_template('story.html', title=t.title, author=t.author, story_id=story_id, page=page)
     page = int(page)
-    title = "Bedtime - Story ID:  %s" % story_id
     try:
         scene = models.Story.objects(id=story_id).distinct('pages')[page].sentences
     except IndexError:
@@ -42,7 +46,7 @@ def story(story_id, page):
     page += 1
     image = random.choice(["bunny", "castle", "dog", "donkey", "elephant", "giraffe", "lion",
                            "turkey", "turtle", "wolf"]) + ".png"
-    return render_template('story.html', title=title, scene=scene, image=image, story_id=story_id, page=page)
+    return render_template('story.html', title=t.title, scene=scene, image=image, story_id=story_id, page=page)
 
 
 @app.route('/about')
@@ -60,21 +64,39 @@ def feedback(story_id):
     if request.method == 'POST':
         f = models.Feedback.objects(story_id=int(story_id))
         data = form.data
-        print(form.data)
         # removing unanswered optional questions from survey
         for key, value in form.data.items():
             if value is None or value == 'None' or value == '':
                 del data[key]
-        print(data)
         # update database if answers have been submitted
         if data:
             f.update_one(upsert=True, **data)
     return render_template('feedback.html', form=form)
 
 
-@app.route('/contribute')
+@app.route('/contribute', methods=['GET', 'POST'])
 def contribute():
-    return render_template('contribute.html')
+    form = Contribute()
+    if request.method == 'POST':
+        data = form.data
+        # removing unanswered fields and corresponding select fields
+        options = {}
+        for key, value in form.data.items():
+            if value is None or value == 'None' or value == '':
+                if key[-7:] != 'option':
+                    del data[key]
+                    del data[key + '_option']
+            # adding select fields to options dict for matching
+            if key[-7:] == '_option':
+                options[key[:-7]] = value
+                del data[key]
+        # add match selection and input for entry into database
+        for category, name in options.items():
+            for k, terms in data.items():
+                if category == k:
+                    print(terms)
+                    models.ContributeTerms.objects.filter(category=category, name=name).update(add_to_set__terms=terms)
+    return render_template('contribute.html', form=form)
 
 
 @app.route('/ending/<story_id>', methods=['GET', 'POST'])

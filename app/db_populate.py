@@ -33,9 +33,9 @@ _size = {"big": ["big", "giant", "enormous", "gigantic", "huge", "massive", "gre
          "average": ["average", "normal", "medium-sized", "unassuming"],
          "small": ["small", "tiny", "little", "petite", "pocket-sized", "miniature"]}
 
-_covering = {"furry": ["furry", "fluffy", "downy", "hairy"],
-             "spiny": ["spiny", "spiky", "prickly"],
-             "scales": ["scales", "armoured", "plated"]}
+_covering = {"fur": ["furry", "fluffy", "downy", "hairy"],
+             "spines": ["spiny", "spiky", "prickly"],
+             "scales": ["scaly", "armoured", "plated"]}
 
 _emotion = {"happy": ["happy", "jolly", "cheerful", "bouncy", "smiley", "joyous"],
             "angry": ["angry", "scary", "frightening", "cross", "furious", "vicious"],
@@ -72,6 +72,13 @@ def populate_term(term_dict):
             entry = Terms(category=category, name=name, terms=terms)
             entry.save()
 
+
+def populate_contribute_term(term_dict):
+    for category, dictionary in term_dict.items():
+        print(category)
+        for name in dictionary:
+            cont = ContributeTerms(category=category, name=name, terms=[])
+            cont.save()
 
 _opening = ["a long long time ago",
             "in a galaxy far far away",
@@ -189,8 +196,8 @@ _scared_action = {'action': ["hid from",
                              "ran away from",
                              "looked nervously at"],
                   'reaction': ["_heroName wondered what he had done wrong",
-                               "_HeroName tried their best to comfort them",
-                               "_HeroName tried to look less scary"]}
+                               "_heroName tried their best to comfort them",
+                               "_heroName tried to look less scary"]}
 
 action_dict = {'character_action': _character_action,
                'happy_action': _happy_action,
@@ -235,6 +242,7 @@ def populate_answer(answer_dict):
             entry = Answers(category=category, answer_type=answer_type, answers=answers)
             entry.save()
 
+
 def populate_term(term_dict):
     for category, dictionary in term_dict.items():
         print(category)
@@ -243,18 +251,17 @@ def populate_term(term_dict):
             entry.save()
 
 
-"""Uncomment to clear the database.
-Do so before making changes to model/schema to prevent MongoDB exceptions"""
+"""Uncomment to delete and repopulate the database.
+Make deletions first unless fresh data is being used to prevent collisions.
+Story is populated when using the application so no pre-population is required"""
 Answers.objects.delete()
 Story.objects.delete()
 Actions.objects.delete()
 Texts.objects.delete()
+ContributeTerms.objects.delete()
 Terms.objects.delete()
-
-"""Uncomment to repopulate the database.
-Make deletions first unless fresh data is being used to prevent collisions.
-Story is populated when using the application so no pre-population is required"""
 populate_answer(answer_dict)
 populate_action(action_dict)
 populate_text(text_dict)
+populate_contribute_term(term_dict)
 populate_term(term_dict)

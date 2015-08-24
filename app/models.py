@@ -8,6 +8,13 @@ class Terms(db.Document):
     terms = db.ListField(db.StringField(max_length=20))
 
 
+class ContributeTerms(db.Document):
+    """Temporary storage of user contributions before moderation"""
+    category = db.StringField(max_length=12)
+    name = db.StringField(max_length=12, unique=True)
+    terms = db.ListField(db.StringField(max_length=20))
+
+
 class Texts(db.Document):
     """Story phrases for scenes"""
     category = db.StringField(max_length=20, unique=True)
@@ -37,6 +44,8 @@ class Pages(db.EmbeddedDocument):
 class Story(db.Document):
     """Stories and their scenes
     Uses MongoDB internal IDs as UUID for story navigation"""
+    title = db.StringField(max_length=70)
+    author = db.StringField(max_length=30)
     pages = db.ListField(db.EmbeddedDocumentField(Pages))
 
 

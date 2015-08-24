@@ -1,8 +1,59 @@
-{% extends "pages.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-	<div class="content">
-		<p>Coming soon...</p>
-	</div>
+	<div class="row">
+		<div class="text">
+			<p>We are always looking for new words and phrases to use in our Bedtime stories and here is your opportunity to help us.</p>
+			<p>Fill out the forms below with words you would like to see and, if we like them, you may just see your own words appearing in future stories!</p>
+			<p>Currently we are only taking submissions to improve our character descriptions but soon you will be able to dream up all sorts of words and phrases for use in our stories, so stay tuned for updates!</p>
+		</div>
+		<form action="" method="post" name="contribute">
+			{{form.hidden_tag()}}
 
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">What's a good name for a character?</div>
+				<div class="small-4 medium-3 columns">{{ form.name_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.name }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">What types of creature could there be?</div>
+				<div class="small-4 medium-3 columns">{{ form.kind_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.kind }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">What types of patterns might their colours have?</div>
+				<div class="small-4 medium-3 columns">{{ form.pattern_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.pattern }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">Where might our hero visit in their quest?</div>
+				<div class="small-4 medium-3 columns">{{ form.location_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.location }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">What are good words to describe size?</div>
+				<div class="small-4 medium-3 columns">{{ form.size_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.size }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">What are good words for a creature's fur, spines or scales?</div>
+				<div class="small-4 medium-3 columns">{{ form.covering_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.covering }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">What words would you use to describe emotions?</div>
+				<div class="small-4 medium-3 columns">{{ form.emotion_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.emotion }}</div>
+			</div>
+			<div class="small-12 medium-6 columns">
+				<div class="small-12 columns">How would you describe the mood of a location?</div>
+				<div class="small-4 medium-3 columns">{{ form.mood_option }}</div>
+				<div class="small-8 medium-9 columns">{{ form.mood }}</div>
+			</div>
+
+			<div class="small-12 columns">
+				<button tabindex="0" type="submit"class="round button" value="Submit">Contribute!</button>
+			</div>
+		</form>
+	</div>
 {% endblock %}

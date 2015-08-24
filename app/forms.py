@@ -1,6 +1,7 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, SelectField, RadioField, IntegerField
-from wtforms.validators import DataRequired, length, optional
+from wtforms.validators import DataRequired, length
+from .models import Terms
 
 
 class CharacterCreator(Form):
@@ -41,16 +42,26 @@ class Contribute(Form):
     """Allows users to contribute their own texts and phrases (currently only for characters and locations)
     Validated using WTForms validators to ensure compliance with the parameter requirements
     of database and story generator"""
-    name_option = SelectField("name_option", choices=['male', 'female'])
+    name_option = SelectField("gender", choices=[('male', 'male'), ('female', 'female')])
     name = StringField('name', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    kind_option = SelectField("kind",
+                              choices=[(choice, choice) for choice in Terms.objects(category='kind').distinct('name')])
     kind = StringField('kind', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    pattern_option = SelectField("pattern", choices=[(choice, choice) for choice in
+                                                            Terms.objects(category='pattern').distinct('name')])
     pattern = StringField('pattern', validators=[length(max=20, message=u"Please keep to 20 characters")])
+    location_option = SelectField("location", choices=[(choice, choice) for choice in
+                                                              Terms.objects(category='location').distinct('name')])
     location = StringField('location', validators=[length(max=20, message=u"Please keep to 20 characters")])
-    size_option = SelectField("name_option", choices=['male', 'female'])
+    size_option = SelectField("size",
+                              choices=[(choice, choice) for choice in Terms.objects(category='size').distinct('name')])
     size = StringField('size', validators=[length(max=20, message=u"Please keep to 20 characters")])
-    covering_option = SelectField("name_option", choices=['male', 'female'])
+    covering_option = SelectField("covering", choices=[(choice, choice) for choice in
+                                                              Terms.objects(category='covering').distinct('name')])
     covering = StringField('covering', validators=[length(max=20, message=u"Please keep to 20 characters")])
-    emotion_option = SelectField("name_option", choices=['male', 'female'])
+    emotion_option = SelectField("emotion", choices=[(choice, choice) for choice in
+                                                            Terms.objects(category='emotion').distinct('name')])
     emotion = StringField('emotion', validators=[length(max=20, message=u"Please keep to 20 characters")])
-    mood_option = SelectField("name_option", choices=['male', 'female'])
+    mood_option = SelectField("mood",
+                              choices=[(choice, choice) for choice in Terms.objects(category='mood').distinct('name')])
     mood = StringField('mood', validators=[length(max=20, message=u"Please keep to 20 characters")])

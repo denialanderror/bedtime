@@ -9,12 +9,14 @@ _test = ['this is a normal sentence']  # for test purposes only, to avoid issues
 
 
 class Writer(object):
-    def __init__(self, name, kind, gender, quest, story_length):
+    def __init__(self, author, name, kind, gender, item, story_length):
         # hero = Creature(name, kind, gender)
         hero = Creature(name=name, gender=gender)
+        self.author = author
+        self.title = name + " and the missing " + item
         self.characters = [hero, hero]  # added twice to correctly initialise list
-        self.story_index = 0
-        self.quest = quest
+        self.story_index = 1
+        self.item = item
         self.story_length = story_length
         self.locations = [Location(), Location()]
         self.end = False
@@ -42,7 +44,7 @@ class Writer(object):
                     '_npcDescription': self.characters[1].description(),
                     '_ref_expr_npc_full': self.characters[1].ref_expr(True),
                     '_ref_expr_npc': self.characters[1].ref_expr(False),
-                    '_item': self.quest,
+                    '_item': self.item,
                     '_nextLocation': self.locations[1].location,
                     }
         try:
@@ -104,6 +106,7 @@ class Writer(object):
                 answer_type = 'angry_answer'
             elif self.story_index == self.story_length - 1:
                 answer_type = 'yes'
+                self.end = True
             else:
                 answer_type = 'no'
             expression = random.choice(
@@ -146,33 +149,26 @@ class Writer(object):
         # flatten list
         sentences = [item for sublist in sentences for item in sublist]
         # transform phrases and aggregate
-        print(sentences)
         sentences = [self.aggregation(phrases) for phrases in sentences]
         # realise
         sentences = [self.realise(sentence) for sentence in sentences]
         return sentences
 
-    def story(self):
-        """Generates the next scene of the story, with separate beginning, middle and end."""
-        self.characters[1] = self.locations[1].character  # load next non-user character
-        if self.story_index == 0:
-            return [self.realise(self.aggregation(['opening', 'intro'])), self.realise(self.phrase('quest'))]
-        if self.story_index < self.story_length - 1:
-            return self.scene()
-        else:
-            self.end = True
-            return [self.realise(self.phrase("end")),
-                    "And they all lived happily ever after.",
-                    "The end."]
-
     def generate(self):
         """Creates story by adding scenes to pages until the end is reached.
         Story added to MongoDB instance and the UUID of the story is returned to the caller"""
         pages = []
+        self.characters[1] = self.locations[1].character  # load next non-user character
+        pages.append(Pages(page=self.story_index, sentences=[self.realise(self.aggregation(['opening', 'intro'])),
+                                                             self.realise(self.phrase('quest'))]))
+        self.story_index += 1
         while not self.end:
-            pages.append(Pages(page=self.story_index, sentences=self.story()))
+            pages.append(Pages(page=self.story_index, sentences=self.scene()))
             self.add_location()
             self.story_index += 1
-        story = Story(pages=pages)
+        pages.append(Pages(page=self.story_index,
+                           sentences=[self.realise(self.phrase("end")), "And they all lived happily ever after.",
+                                      "The end."]))
+        story = Story(title=self.title, author=self.author, pages=pages)
         story.save()
         return story.id
