@@ -16,12 +16,7 @@ $('a.custom-close-reveal-modal').click(function(){
     $('#thanks').foundation('reveal', 'close');
 });
 
-$('#create-form').on('valid.fndtn.abide', function () {
-    $('#create').foundation('reveal', 'close');
-    $('#loading-modal').foundation('reveal', 'open');
-    $("#loading").show();
-    $("#content").hide();
-  });
+
 
 //$('#create-form').submit(function () {
 //    $('#create').foundation('reveal', 'close');
