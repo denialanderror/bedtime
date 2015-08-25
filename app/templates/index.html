@@ -1,31 +1,35 @@
 {% extends "pages.html" %}
 
 {% block content %}
+	<div id="loading"></div>
 	<div class="content">
 		<p>Welcome to Bedtime - the bedtime story generator!</p>
-		<p> Click the arrow below to start your story</p>
+		<p>Within a few clicks, a personalised tale will be ready to send you off to the land of nod.</p>
+		<p> Click the arrow below to start your story.</p>
 	</div>
 	<div class="next">
 		<a data-reveal-id="create"><img src="{{ url_for('static', filename='img/next.png') }}"></a>
 	</div>
 
-		<div id="create" class=" small reveal-modal" data-reveal aria-labelledby="form" aria-hidden="true" role="form">
+		<div id="create" class=" small reveal-modal" data-reveal aria-labelledby="create-form" aria-hidden="true" role="form">
 
-		<form class="form" action="" method="post" name="create" id="create-form">
+		<form data-abide class="form" action="" method="post" name="create" id="create-form">
 			{{form.hidden_tag()}}
 			<div class="large-8 columns">
 				<label for="author">What is your name?</label>
-				<input id="author" name="author" type="text" value="" />
+				<input id="author" name="author" type="text" value="" required pattern="^[a-z]{1,30}$"/>
+				<small class="error">Please submit a name less than 30 characters</small>
 			</div>
 			<div class="large-8 columns">
 				<label>how long should we make this story?</label>
 				<input id="length-0" name="length" type="radio" value="4" /><label for="length-0">short</label>
-				<input id="length-1" name="length" type="radio" value="6" /><label for="length-1">medium</label>
+				<input id="length-1" name="length" type="radio" value="6" checked="checked"/><label for="length-1">medium</label>
 				<input id="length-1" name="length" type="radio" value="8" /><label for="length-2">long</label>
 			</div>
 			<div class="large-8 columns">
 				<label for="hero">What is your character called?</label>
-				<input id="hero" name="hero" type="text" value="" />
+				<input id="hero" name="hero" type="text" value="" required pattern="^[a-z]{1,20}$"/>
+				<small class="error">Please submit a name less than 20 characters</small>
 			</div>
 			{#            <div class="large-8 columns">#}
 			{#                <label for="kind">What sort of animal are they?</label>#}
@@ -33,17 +37,23 @@
 			{#            </div>#}
 			<div class="large-8 columns">
 				<label>Are they a boy or a girl</label>
-				<input id="gender-0" name="gender" type="radio" value="male" /><label for="gender-0">boy</label>
+				<input id="gender-0" name="gender" type="radio" value="male" checked="checked"/><label for="gender-0">boy</label>
 				<input id="gender-1" name="gender" type="radio" value="female" /><label for="gender-1">girl</label>
 			</div>
 			<div class="large-8 columns">
 				<label for="item">And finally, this story is all about finding something that has gone missing. What
 					has your character lost?</label>
-				<input id="item" name="item" type="text" value="" placeholder="e.g. favourite hat, sock..." />
+				<input id="item" name="item" type="text" value="" placeholder="e.g. favourite hat, sock..." required pattern="^[a-z]{1,20}$"/>
+				<small class="error">Please submit a word less than 20 characters</small>
 			</div>
+			<button type="submit"class="round button" value="Submit" id="create-form">Create!</button>
 		</form>
-			<button class="round button"id="create-submit">Create!</button>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-
 	</div>
+
+	<div id="loading-modal" class="small reveal-modal" data-reveal aria-labelledby="form" aria-hidden="true">
+			<strong>Please wait while we generate your story</strong>
+			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
 {% endblock %}

@@ -36,10 +36,6 @@ class Location(object):
         roll = random.random()
         if roll < 0.1:
             return ""
-        elif roll < 0.5:
-            choice = random.sample(choices, 2)
-            choice.insert(1, "and")
-            return " ".join(choice)
         else:
             return random.choice(choices)
 

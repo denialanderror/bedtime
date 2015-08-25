@@ -3,10 +3,10 @@ Bedtime story generator in Python
 
 TODO
 
-Remove (or improve) images
 Clean up grammar
-Sort out mobile menu
+make loading thing
 Sort email error messages
+add validation to feedback
 
 MAYBES
 

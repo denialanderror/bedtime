@@ -32,6 +32,14 @@ body {
   font-size: 80%;
 }
 
+#loading {
+    width: 35px;
+    height: 35px;
+    display: none;
+    background: url("../img/ajax-loader.gif") no-repeat;
+    cursor: wait;
+    }
+
 .feedback {
   padding-top: 10%;
   padding-left: 12%;
@@ -50,7 +58,7 @@ body {
 
 @media only screen {
   .book {
-    height: 45rem;
+    height: 35rem;
     background: url(../img/scroll.svg) no-repeat center;
     background-size: 100% 100%;
   }
@@ -58,7 +66,7 @@ body {
 
 @media only screen and (min-width: 40.063em) {
   .book {
-    height: 45rem;
+    min-height: 45rem;
     margin-top: 1.5rem;
     background: url(../img/book.svg) no-repeat center;
     background-size: 100% 100%;
@@ -87,8 +95,19 @@ body {
 
 .title {
   text-align: center;
-  text-size: 150%;
+  font-size: 150%;
 }
+
+.title p {
+    margin: 20px;
+  }
+
+  .title p:first-child:first-letter {
+    font-family: rosecaps;
+    font-size : 300%;
+    width : 1em;
+    color : black;
+  }
 
 .image {
   padding: 40%;

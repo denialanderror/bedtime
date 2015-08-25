@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, flash
+from flask import render_template, redirect, request
 from app import app, models
 from story.writer import Writer
 from .forms import CharacterCreator, Feedback, Contribute
@@ -16,6 +16,10 @@ def index():
         return redirect('/story/' + str(story_id) + "/start")
     return render_template('index.html', form=form)
 
+# @app.route('/loading')
+# def loading(author, hero, kind, gender, item, length):
+#     story_id = Writer(author, hero, kind, gender, item, int(length)).generate()
+#     return redirect('/story/' + str(story_id) + "/start")
 
 @app.route('/story/<story_id>/<page>')
 def story(story_id, page):
@@ -24,7 +28,7 @@ def story(story_id, page):
     t = models.Story.objects().get(id=story_id)
     if page == 'start':
         page = 0
-        return render_template('story.html', title=t.title, author=t.author, story_id=story_id, page=page)
+        return render_template('story.html', title=t.title.title(), author=t.author, story_id=story_id, page=page)
     page = int(page)
     try:
         scene = models.Story.objects(id=story_id).distinct('pages')[page].sentences

@@ -57,7 +57,9 @@ class Creature(object):
         :returns String"""
         if full:
             return random.choice(["a {0} {1} named {2}".format(self.description(), self.kind, self.name),
-                                 "{0} the {1} {2}".format(self.name, self.description(), self.kind)])
+                                 "{0} the {1} {2}".format(self.name, self.description(), self.kind),
+                                  "{0} the {1}".format(self.name, self.kind),
+                                  "a {0} named {1}".format(self.kind, self.name)])
         else:
             return random.choice(["the {0} {1}".format(self.description(), self.kind), self.name])
 
@@ -71,9 +73,5 @@ class Creature(object):
         roll = random.random()
         if roll < 0.2:
             return ""
-        elif roll < 0.5:
-            choice = random.sample(choices, 2)
-            choice.insert(1, "and")
-            return " ".join(choice)
         else:
             return random.choice(choices)

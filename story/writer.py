@@ -136,9 +136,9 @@ class Writer(object):
                                             [['location', 'status'], ['meet', 'description']]]))
             if random.choice([True, False]) is True:
                 # Adds an interaction
-                sentences.append([['action', 'reaction']])  # PUT IN CHARACTER ACTIONS?
+                sentences.append([['action', 'reaction']])
             # Question and answer
-            sentences.append(random.choice([[['question'], ['answer']], [['non_question', 'non_answer']]]))
+            sentences.append(random.choice([[['question'], ['answer']], [['non_question'], ['non_answer']]]))
 
         if self.story_index == self.story_length - 1 and (self.locations[1].character.emotion == 'angry' or roll < 0.2):
             # Angry characters cannot answer and story must finish with one
