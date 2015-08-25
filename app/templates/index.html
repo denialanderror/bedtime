@@ -1,7 +1,6 @@
 {% extends "pages.html" %}
 
 {% block content %}
-	<div id="loading"></div>
 	<div class="content">
 		<p>Welcome to Bedtime - the bedtime story generator!</p>
 		<p>Within a few clicks, a personalised tale will be ready to send you off to the land of nod.</p>
@@ -13,12 +12,11 @@
 
 		<div id="create" class=" small reveal-modal" data-reveal aria-labelledby="create-form" aria-hidden="true" role="form">
 
-		<form data-abide class="form" action="" method="post" name="create" id="create-form">
+		<form class="form" action="" method="post" name="create" id="create-form">
 			{{form.hidden_tag()}}
 			<div class="large-8 columns">
 				<label for="author">What is your name?</label>
-				<input id="author" name="author" type="text" value="" required pattern="^[a-z]{1,30}$"/>
-				<small class="error">Please submit a name less than 30 characters</small>
+				<input id="author" name="author" type="text" value=""/>
 			</div>
 			<div class="large-8 columns">
 				<label>how long should we make this story?</label>
@@ -28,8 +26,7 @@
 			</div>
 			<div class="large-8 columns">
 				<label for="hero">What is your character called?</label>
-				<input id="hero" name="hero" type="text" value="" required pattern="^[a-z]{1,20}$"/>
-				<small class="error">Please submit a name less than 20 characters</small>
+				<input id="hero" name="hero" type="text" value=""/>
 			</div>
 			{#            <div class="large-8 columns">#}
 			{#                <label for="kind">What sort of animal are they?</label>#}
@@ -43,8 +40,7 @@
 			<div class="large-8 columns">
 				<label for="item">And finally, this story is all about finding something that has gone missing. What
 					has your character lost?</label>
-				<input id="item" name="item" type="text" value="" placeholder="e.g. favourite hat, sock..." required pattern="^[a-z]{1,20}$"/>
-				<small class="error">Please submit a word less than 20 characters</small>
+				<input id="item" name="item" type="text" value="" placeholder="e.g. favourite hat, sock..."/>
 			</div>
 			<button type="submit"class="round button" value="Submit" id="create-form">Create!</button>
 		</form>
