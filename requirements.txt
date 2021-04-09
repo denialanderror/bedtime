@@ -8,7 +8,7 @@ WTForms==2.0.2
 Werkzeug==0.10.4
 decorator==4.0.2
 flask-mongoengine==0.7.1
-gunicorn==19.3.0
+gunicorn==19.5.0
 itsdangerous==0.24
 mimerender==0.5.5
 mongoengine==0.10.0
